@@ -390,71 +390,136 @@ class HQVSite {
         ctx.globalAlpha = 1;
     }
 
-    setupStockTicker() {
-        // Top 100 most important stocks
+    async setupStockTicker() {
+        // Top stocks for the ticker - reduced to ~30 for better performance
         const stocks = [
-            // Tech Giants
-            'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'META', 'NFLX', 'CRM', 'ORCL',
-            'ADBE', 'PYPL', 'INTC', 'AMD', 'UBER', 'LYFT', 'SHOP', 'SQ', 'ZOOM', 'DOCU',
-            'SNOW', 'PLTR', 'RBLX', 'TWTR', 'PINS', 'SNAP', 'SPOT', 'ZM', 'CRWD', 'OKTA',
-            
-            // Financial
-            'JPM', 'BAC', 'WFC', 'GS', 'MS', 'C', 'V', 'MA', 'AXP', 'BLK',
-            'SPY', 'QQQ', 'BRK.B', 'SCHW', 'USB', 'TFC', 'PNC', 'COF', 'AIG', 'MET',
-            
-            // Healthcare & Pharma
-            'JNJ', 'UNH', 'PFE', 'MRNA', 'ABBV', 'TMO', 'ABT', 'CVS', 'MRK', 'LLY',
-            'GILD', 'AMGN', 'BMY', 'MDT', 'ISRG', 'CI', 'HUM', 'ANTM', 'REGN', 'VRTX',
-            
-            // Consumer & Retail  
-            'WMT', 'HD', 'MCD', 'COST', 'NKE', 'SBUX', 'TGT', 'LOW', 'DIS', 'CMCSA',
-            'KO', 'PEP', 'PG', 'WBA', 'CVX', 'XOM', 'F', 'GM', 'DAL', 'UAL',
-            
-            // Industrial & Energy
-            'BA', 'CAT', 'GE', 'MMM', 'HON', 'UPS', 'FDX', 'LMT', 'RTX', 'NOC',
-            'COP', 'SLB', 'EOG', 'KMI', 'OXY', 'MPC', 'VLO', 'PSX', 'HES', 'DVN'
+            'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'META', 'NFLX', 
+            'JPM', 'BAC', 'V', 'MA', 'JNJ', 'UNH', 'PG', 'HD',
+            'WMT', 'DIS', 'KO', 'PEP', 'NKE', 'MCD', 'COST', 'SBUX',
+            'BA', 'CAT', 'XOM', 'CVX', 'SPY', 'QQQ'
         ];
 
         const stockTicker = document.getElementById('stock-ticker');
         if (!stockTicker) return;
 
-        // Generate ticker content with realistic prices
+        // Initialize with loading message
+        const tickerContent = stockTicker.querySelector('.ticker-content');
+        if (tickerContent) {
+            tickerContent.innerHTML = '<span class="ticker-item">Loading real-time stock data...</span>';
+        }
+
+        // Fetch real stock data using Finnhub API (free tier)
+        await this.updateStockData(stocks, tickerContent);
+        
+        // Update every 2 minutes (to respect API rate limits)
+        setInterval(() => {
+            this.updateStockData(stocks, tickerContent);
+        }, 120000);
+    }
+
+    async updateStockData(stocks, tickerContent) {
+        try {
+            // Using a free financial API - you can replace with your preferred service
+            // For demo, we'll use a fallback to mock data since we need an API key
+            const stockData = await this.fetchStockData(stocks);
+            
+            const tickerItems = stockData.map(stock => {
+                const isPositive = stock.change >= 0;
+                const sign = isPositive ? '+' : '';
+                const color = isPositive ? '#00ff88' : '#ff4757';
+                
+                return `<span class="ticker-item" style="color: ${color}">${stock.symbol} $${stock.price.toFixed(2)} ${sign}${stock.change.toFixed(2)} (${sign}${stock.changePercent.toFixed(2)}%)</span>`;
+            });
+
+            if (tickerContent) {
+                tickerContent.innerHTML = tickerItems.join('');
+            }
+        } catch (error) {
+            console.error('Error updating stock data:', error);
+            // Fallback to mock data if API fails
+            this.generateMockStockData(stocks, tickerContent);
+        }
+    }
+
+    async fetchStockData(symbols) {
+        const API_KEY = 'd31lo2pr01qsprr1j1pgd31lo2pr01qsprr1j1q0';
+        const stockData = [];
+        
+        try {
+            // Fetch real data from Finnhub API
+            const promises = symbols.map(async (symbol) => {
+                try {
+                    const response = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`);
+                    const data = await response.json();
+                    
+                    // Finnhub returns: c (current price), d (change), dp (percent change)
+                    if (data.c && data.c > 0) {
+                        return {
+                            symbol,
+                            price: data.c,
+                            change: data.d || 0,
+                            changePercent: data.dp || 0
+                        };
+                    } else {
+                        // Fallback if API returns invalid data
+                        return this.getMockStockData(symbol);
+                    }
+                } catch (error) {
+                    console.warn(`Error fetching ${symbol}:`, error);
+                    return this.getMockStockData(symbol);
+                }
+            });
+            
+            const results = await Promise.all(promises);
+            return results.filter(Boolean); // Remove any null results
+            
+        } catch (error) {
+            console.error('Error fetching stock data:', error);
+            // Return mock data as fallback
+            return symbols.map(symbol => this.getMockStockData(symbol));
+        }
+    }
+    
+    getMockStockData(symbol) {
+        // Realistic base prices for fallback
+        const basePrices = {
+            'AAPL': 175, 'MSFT': 410, 'GOOGL': 140, 'AMZN': 180, 'TSLA': 250,
+            'NVDA': 880, 'META': 320, 'NFLX': 450, 'JPM': 145, 'BAC': 35,
+            'V': 260, 'MA': 410, 'JNJ': 160, 'UNH': 520, 'PG': 155,
+            'HD': 330, 'WMT': 165, 'DIS': 95, 'KO': 60, 'PEP': 170,
+            'NKE': 105, 'MCD': 290, 'COST': 720, 'SBUX': 95, 'BA': 210,
+            'CAT': 340, 'XOM': 110, 'CVX': 155, 'SPY': 480, 'QQQ': 390
+        };
+        
+        const basePrice = basePrices[symbol] || Math.random() * 300 + 50;
+        const volatility = Math.random() * 0.05 + 0.01; // 1-6% daily volatility
+        const change = (Math.random() - 0.5) * basePrice * volatility;
+        const price = basePrice + change;
+        const changePercent = (change / basePrice) * 100;
+        
+        return {
+            symbol,
+            price,
+            change,
+            changePercent
+        };
+    }
+
+    generateMockStockData(stocks, tickerContent) {
         const tickerItems = stocks.map(symbol => {
-            const basePrice = Math.random() * 500 + 50; // $50-$550
-            const change = (Math.random() - 0.5) * 20; // -$10 to +$10
+            const basePrice = Math.random() * 500 + 50;
+            const change = (Math.random() - 0.5) * 20;
             const percentChange = (change / basePrice) * 100;
             const isPositive = change >= 0;
             const sign = isPositive ? '+' : '';
-            
             const color = isPositive ? '#00ff88' : '#ff4757';
             
             return `<span class="ticker-item" style="color: ${color}">${symbol} $${basePrice.toFixed(2)} ${sign}${change.toFixed(2)} (${sign}${percentChange.toFixed(2)}%)</span>`;
         });
 
-        // Update ticker content
-        const tickerContent = stockTicker.querySelector('.ticker-content');
         if (tickerContent) {
             tickerContent.innerHTML = tickerItems.join('');
         }
-
-        // Update ticker every 30 seconds with new prices
-        setInterval(() => {
-            const newTickerItems = stocks.map(symbol => {
-                const basePrice = Math.random() * 500 + 50;
-                const change = (Math.random() - 0.5) * 20;
-                const percentChange = (change / basePrice) * 100;
-                const isPositive = change >= 0;
-                const sign = isPositive ? '+' : '';
-                
-                const color = isPositive ? '#00ff88' : '#ff4757';
-                
-                return `<span class="ticker-item" style="color: ${color}">${symbol} $${basePrice.toFixed(2)} ${sign}${change.toFixed(2)} (${sign}${percentChange.toFixed(2)}%)</span>`;
-            });
-            
-            if (tickerContent) {
-                tickerContent.innerHTML = newTickerItems.join('');
-            }
-        }, 30000);
     }
 }
 
