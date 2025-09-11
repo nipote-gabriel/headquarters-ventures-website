@@ -402,14 +402,13 @@ class HQVSite {
         const stockTicker = document.getElementById('stock-ticker');
         if (!stockTicker) return;
 
-        // Initialize with loading message
         const tickerContent = stockTicker.querySelector('.ticker-content');
-        if (tickerContent) {
-            tickerContent.innerHTML = '<span class="ticker-item">Loading real-time stock data...</span>';
-        }
-
-        // Fetch real stock data using Finnhub API (free tier)
-        await this.updateStockData(stocks, tickerContent);
+        
+        // Start with immediate mock data so ticker begins scrolling right away
+        this.generateMockStockData(stocks, tickerContent);
+        
+        // Then fetch real data and replace it (async, non-blocking)
+        this.updateStockData(stocks, tickerContent);
         
         // Update every 2 minutes (to respect API rate limits)
         setInterval(() => {
