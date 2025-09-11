@@ -326,7 +326,7 @@ a:hover {
 
 .hero-video-layout {
     display: grid;
-    grid-template-columns: 1fr 450px;
+    grid-template-columns: 1fr 900px;
     gap: 0;
     width: 100vw;
     height: 100%;
@@ -787,23 +787,37 @@ a:hover {
 }
 
 /* Responsive Design for Hero Video Layout */
+@media (max-width: 1600px) {
+    .hero-video-layout {
+        grid-template-columns: 1fr 800px;
+        gap: 0;
+    }
+}
+
+@media (max-width: 1400px) {
+    .hero-video-layout {
+        grid-template-columns: 1fr 700px;
+        gap: 0;
+    }
+}
+
 @media (max-width: 1200px) {
     .hero-video-layout {
-        grid-template-columns: 1fr 400px;
+        grid-template-columns: 1fr 600px;
         gap: 0;
     }
 }
 
 @media (max-width: 1024px) {
     .hero-video-layout {
-        grid-template-columns: 1fr 360px;
+        grid-template-columns: 1fr 500px;
         gap: 0;
     }
 }
 
 @media (max-width: 900px) {
     .hero-video-layout {
-        grid-template-columns: 1fr 340px;
+        grid-template-columns: 1fr 450px;
         gap: 0;
     }
     
