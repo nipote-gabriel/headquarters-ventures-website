@@ -544,6 +544,10 @@ a:hover {
     margin-bottom: -20px !important;
 }
 
+.newsletter-section-compact .email-signup {
+    margin-bottom: -10px !important;
+}
+
 .newsletter-link {
     display: block;
     width: 100%;
