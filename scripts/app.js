@@ -27,6 +27,7 @@ class HQVSite {
             this.loadRecentPosts();
             this.setupNewsletterSignup();
             this.setupFooterLinks();
+            this.setupPortfolioTracker();
             
         } catch (error) {
             console.error('Error initializing site:', error);
@@ -258,6 +259,134 @@ class HQVSite {
     truncateText(text, maxLength = 150) {
         if (text.length <= maxLength) return text;
         return text.substring(0, maxLength).trim() + '...';
+    }
+
+    setupPortfolioTracker() {
+        // Mock Apple stock data - in reality this would come from an API
+        let currentPrice = 150.25;
+        let previousPrice = 147.90;
+        let change = currentPrice - previousPrice;
+        let changePercent = (change / previousPrice) * 100;
+        let shares = 10;
+        let totalValue = currentPrice * shares;
+
+        // Generate mock chart data
+        const chartData = this.generateMockChartData(previousPrice, currentPrice);
+
+        // Update portfolio display
+        this.updatePortfolioDisplay(change, changePercent, totalValue);
+
+        // Draw chart
+        this.drawPortfolioChart(chartData);
+
+        // Simulate real-time updates every 30 seconds
+        setInterval(() => {
+            // Simulate price fluctuation
+            const fluctuation = (Math.random() - 0.5) * 2; // -1 to +1
+            currentPrice += fluctuation;
+            change = currentPrice - previousPrice;
+            changePercent = (change / previousPrice) * 100;
+            totalValue = currentPrice * shares;
+
+            this.updatePortfolioDisplay(change, changePercent, totalValue);
+            
+            // Update chart data and redraw
+            chartData.push(currentPrice);
+            if (chartData.length > 20) chartData.shift(); // Keep only last 20 points
+            this.drawPortfolioChart(chartData);
+        }, 30000);
+    }
+
+    generateMockChartData(startPrice, endPrice) {
+        const points = 20;
+        const data = [];
+        const step = (endPrice - startPrice) / points;
+        
+        for (let i = 0; i <= points; i++) {
+            const noise = (Math.random() - 0.5) * 2; // Add some randomness
+            data.push(startPrice + (step * i) + noise);
+        }
+        
+        return data;
+    }
+
+    updatePortfolioDisplay(change, changePercent, totalValue) {
+        const statusIndicator = document.getElementById('status-indicator');
+        const statusValue = document.getElementById('status-value');
+        const aaplValue = document.getElementById('aapl-value');
+        const totalValueEl = document.getElementById('total-value');
+
+        const isPositive = change >= 0;
+        
+        // Update status indicator
+        if (statusIndicator) {
+            statusIndicator.textContent = isPositive ? '▲' : '▼';
+            statusIndicator.className = `status-indicator ${isPositive ? 'positive' : 'negative'}`;
+        }
+
+        // Update status value
+        if (statusValue) {
+            const sign = isPositive ? '+' : '';
+            statusValue.textContent = `${sign}$${change.toFixed(2)} (${sign}${changePercent.toFixed(2)}%)`;
+            statusValue.className = `status-value ${isPositive ? 'positive' : 'negative'}`;
+        }
+
+        // Update holding value
+        if (aaplValue) {
+            aaplValue.textContent = `$${totalValue.toFixed(2)}`;
+        }
+
+        // Update total value
+        if (totalValueEl) {
+            totalValueEl.textContent = `$${totalValue.toFixed(2)}`;
+        }
+    }
+
+    drawPortfolioChart(data) {
+        const canvas = document.getElementById('portfolio-canvas');
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+
+        // Clear canvas
+        ctx.clearRect(0, 0, width, height);
+
+        if (data.length < 2) return;
+
+        // Find min/max for scaling
+        const minPrice = Math.min(...data);
+        const maxPrice = Math.max(...data);
+        const range = maxPrice - minPrice || 1;
+
+        // Set up drawing
+        ctx.strokeStyle = data[data.length - 1] >= data[0] ? '#00ff88' : '#ff4757';
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        // Draw line
+        ctx.beginPath();
+        data.forEach((price, index) => {
+            const x = (index / (data.length - 1)) * width;
+            const y = height - ((price - minPrice) / range) * height;
+            
+            if (index === 0) {
+                ctx.moveTo(x, y);
+            } else {
+                ctx.lineTo(x, y);
+            }
+        });
+        ctx.stroke();
+
+        // Fill area under curve
+        ctx.globalAlpha = 0.1;
+        ctx.fillStyle = ctx.strokeStyle;
+        ctx.lineTo(width, height);
+        ctx.lineTo(0, height);
+        ctx.fill();
+        ctx.globalAlpha = 1;
     }
 }
 

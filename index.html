@@ -88,6 +88,32 @@
                                 allowfullscreen>
                             </iframe>
                         </div>
+                        
+                        <!-- Stock & Advertising Tickers -->
+                        <div class="ticker-container">
+                            <!-- Stock Ticker -->
+                            <div class="stock-ticker" id="stock-ticker">
+                                <div class="ticker-content">
+                                    <span class="ticker-item">AAPL $150.25 +2.35 (+1.59%)</span>
+                                    <span class="ticker-item">TSLA $245.67 -5.23 (-2.08%)</span>
+                                    <span class="ticker-item">NVDA $875.42 +12.84 (+1.49%)</span>
+                                    <span class="ticker-item">MSFT $412.89 +3.45 (+0.84%)</span>
+                                    <span class="ticker-item">GOOGL $138.92 -1.23 (-0.88%)</span>
+                                    <span class="ticker-item">AMZN $185.34 +4.67 (+2.58%)</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Advertising Ticker -->
+                            <div class="ad-ticker" id="ad-ticker">
+                                <div class="ticker-content">
+                                    <span class="ticker-item">🚀 Invest with Robinhood - Commission-free trading</span>
+                                    <span class="ticker-item">💰 Try Betterment - Automated investing made easy</span>
+                                    <span class="ticker-item">📈 E*TRADE - Power tools for active traders</span>
+                                    <span class="ticker-item">🏦 Charles Schwab - Your financial partner</span>
+                                    <span class="ticker-item">💳 Chase Sapphire - Earn rewards on every purchase</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Side Info Panel -->
@@ -102,6 +128,31 @@
                         <div class="live-indicator" id="live-indicator" style="display: none;">
                             <div class="live-dot"></div>
                             <span>LIVE NOW</span>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Tracker -->
+                    <div class="portfolio-tracker">
+                        <div class="portfolio-header">
+                            <h3>Live Portfolio</h3>
+                            <div class="portfolio-status" id="portfolio-status">
+                                <span class="status-indicator positive" id="status-indicator">▲</span>
+                                <span class="status-value" id="status-value">+$23.50 (+1.59%)</span>
+                            </div>
+                        </div>
+                        <div class="portfolio-content">
+                            <div class="portfolio-holding">
+                                <span class="holding-symbol">AAPL</span>
+                                <span class="holding-shares">10 shares</span>
+                                <span class="holding-value" id="aapl-value">$1,502.50</span>
+                            </div>
+                            <div class="portfolio-chart" id="portfolio-chart">
+                                <canvas id="portfolio-canvas" width="200" height="60"></canvas>
+                            </div>
+                            <div class="portfolio-total">
+                                <span class="total-label">Total Value:</span>
+                                <span class="total-value" id="total-value">$1,502.50</span>
+                            </div>
                         </div>
                     </div>
 
