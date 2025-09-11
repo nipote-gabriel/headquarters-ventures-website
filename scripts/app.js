@@ -221,12 +221,7 @@ class HQVSite {
 
         // Only show if there's actual embed code (not the placeholder comment)
         if (this.config.subscribe_embed.includes('<!-- Paste your')) {
-            container.innerHTML = `
-                <div class="newsletter-placeholder">
-                    <h3>Newsletter Coming Soon</h3>
-                    <p>We're working on setting up our newsletter. Follow us on social media for updates!</p>
-                </div>
-            `;
+            container.style.display = 'none';
         } else {
             container.innerHTML = this.config.subscribe_embed;
         }
