@@ -525,7 +525,11 @@ a:hover {
 }
 
 .newsletter-section-compact .email-signup {
-    margin-bottom: var(--spacing-2);
+    margin-bottom: 0;
+}
+
+.beehiiv-embed {
+    margin-bottom: -20px !important;
 }
 
 .newsletter-form {
