@@ -536,6 +536,13 @@ a:hover {
     margin-bottom: -20px !important;
 }
 
+.newsletter-link {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    margin-top: var(--spacing-2);
+}
+
 .newsletter-form {
     display: flex;
     gap: var(--spacing-2);
