@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Headquarters Ventures</title>
+    <meta name="description" content="Explore our investment portfolio and business ventures. Business, comedy, and the occasional bad idea.">
+    <meta name="keywords" content="portfolio, investments, ventures, headquarters ventures, business">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://headquarters.ventures/portfolio">
+    <meta property="og:title" content="Portfolio - Headquarters Ventures">
+    <meta property="og:description" content="Our investment portfolio and business ventures">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://headquarters.ventures/portfolio">
+    <meta property="twitter:title" content="Portfolio - Headquarters Ventures">
+    <meta property="twitter:description" content="Our investment portfolio and business ventures">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <a href="/" class="brand-link">
+                    <h1 class="brand-title">Headquarters Ventures</h1>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="https://www.youtube.com/channel/UCN69r7v5sBAwbb3aWlqY1YA" target="_blank" class="nav-link">Videos</a></li>
+                <li><a href="https://www.incompetencewetrust.com" target="_blank" class="nav-link">News</a></li>
+                <li><a href="team.html" class="nav-link">Team</a></li>
+                <li><a href="portfolio.html" class="nav-link active">Portfolio</a></li>
+                <li><a href="more.html" class="nav-link">More</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay">
+        <div class="mobile-menu-panel">
+            <div class="mobile-menu-header">
+                <h3 class="mobile-menu-title">Menu</h3>
+                <button class="mobile-menu-close" aria-label="Close menu">&times;</button>
+            </div>
+            <ul class="mobile-nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="https://www.youtube.com/channel/UCN69r7v5sBAwbb3aWlqY1YA" target="_blank" class="nav-link">Videos</a></li>
+                <li><a href="https://www.incompetencewetrust.com" target="_blank" class="nav-link">News</a></li>
+                <li><a href="team.html" class="nav-link">Team</a></li>
+                <li><a href="portfolio.html" class="nav-link active">Portfolio</a></li>
+                <li><a href="more.html" class="nav-link">More</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <main>
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1>Our Portfolio</h1>
+                <p>We put our mouth where our money is.</p>
+            </div>
+        </section>
+
+        <!-- Portfolio Stats -->
+        <section class="portfolio-stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">$2.4M</div>
+                        <div class="stat-label">Total Invested</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">23</div>
+                        <div class="stat-label">Companies</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Exits</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3.2x</div>
+                        <div class="stat-label">Average Return</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter Tabs -->
+        <section class="portfolio-content">
+            <div class="container">
+                <div class="portfolio-filters">
+                    <button class="filter-btn active" data-filter="all">All Investments</button>
+                    <button class="filter-btn" data-filter="active">Active</button>
+                    <button class="filter-btn" data-filter="exited">Exited</button>
+                    <button class="filter-btn" data-filter="failed">Learning Experiences</button>
+                </div>
+
+                <!-- Active Investments -->
+                <div class="portfolio-grid" id="portfolio-grid">
+                    <!-- Success Story -->
+                    <div class="portfolio-item active" data-category="active">
+                        <div class="portfolio-logo">
+                            <div class="logo-placeholder success">
+                                <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                                    <rect width="80" height="80" rx="16" fill="var(--success-color)"/>
+                                    <path d="M25 40L35 50L55 30" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <h3 class="company-name">GreenTech Solutions</h3>
+                            <p class="company-category">Clean Energy • Series B</p>
+                            <p class="company-description">
+                                Revolutionary solar panel technology that's 40% more efficient than traditional panels. 
+                                Currently expanding across the Southwest US market.
+                            </p>
+                            <div class="investment-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Invested</span>
+                                    <span class="detail-value">$250K</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Valuation</span>
+                                    <span class="detail-value">$45M</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Status</span>
+                                    <span class="detail-value status-active">Active</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Promising Startup -->
+                    <div class="portfolio-item active" data-category="active">
+                        <div class="portfolio-logo">
+                            <div class="logo-placeholder">
+                                <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                                    <rect width="80" height="80" rx="16" fill="var(--accent-color)"/>
+                                    <path d="M20 60L40 20L60 60H20Z" fill="#000" opacity="0.3"/>
+                                    <text x="40" y="70" text-anchor="middle" fill="#000" font-size="10" font-weight="bold">FP</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <h3 class="company-name">FinPal</h3>
+                            <p class="company-category">FinTech • Seed</p>
+                            <p class="company-description">
+                                AI-powered personal finance assistant that helps millennials actually understand their money. 
+                                Because apparently "just don't buy avocado toast" isn't comprehensive financial advice.
+                            </p>
+                            <div class="investment-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Invested</span>
+                                    <span class="detail-value">$100K</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Valuation</span>
+                                    <span class="detail-value">$8M</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Status</span>
+                                    <span class="detail-value status-active">Active</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Big Win -->
+                    <div class="portfolio-item exited" data-category="exited">
+                        <div class="portfolio-logo">
+                            <div class="logo-placeholder success">
+                                <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                                    <rect width="80" height="80" rx="16" fill="var(--success-color)"/>
+                                    <path d="M40 15L45 30H60L48 40L53 55L40 45L27 55L32 40L20 30H35L40 15Z" fill="white"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <h3 class="company-name">CloudSync Pro</h3>
+                            <p class="company-category">SaaS • Series A → Acquired</p>
+                            <p class="company-description">
+                                Business workflow automation tool that was acquired by Microsoft for $180M. 
+                                Our best investment decision so far (we're still buying rounds for everyone).
+                            </p>
+                            <div class="investment-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Invested</span>
+                                    <span class="detail-value">$150K</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Exit Value</span>
+                                    <span class="detail-value">$2.1M</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Multiple</span>
+                                    <span class="detail-value status-success">14x</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Another Exit -->
+                    <div class="portfolio-item exited" data-category="exited">
+                        <div class="portfolio-logo">
+                            <div class="logo-placeholder">
+                                <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                                    <rect width="80" height="80" rx="16" fill="#4ade80"/>
+                                    <circle cx="40" cy="40" r="20" fill="white" opacity="0.9"/>
+                                    <path d="M30 40L36 46L50 32" stroke="#4ade80" stroke-width="3" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <h3 class="company-name">HealthTrack</h3>
+                            <p class="company-category">HealthTech • Seed → IPO</p>
+                            <p class="company-description">
+                                Wearable health monitoring platform that went public in 2023. Not bad for a company that 
+                                started in a garage and whose first prototype was held together with duct tape.
+                            </p>
+                            <div class="investment-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Invested</span>
+                                    <span class="detail-value">$75K</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Exit Value</span>
+                                    <span class="detail-value">$420K</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Multiple</span>
+                                    <span class="detail-value status-success">5.6x</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Learning Experience -->
+                    <div class="portfolio-item failed" data-category="failed">
+                        <div class="portfolio-logo">
+                            <div class="logo-placeholder failed">
+                                <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                                    <rect width="80" height="80" rx="16" fill="var(--error-color)" opacity="0.7"/>
+                                    <path d="M25 25L55 55M55 25L25 55" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <h3 class="company-name">PetCoin</h3>
+                            <p class="company-category">Crypto • ICO → Shut Down</p>
+                            <p class="company-description">
+                                Cryptocurrency for pet owners. Seemed like a good idea at the time. Turns out dogs don't 
+                                actually care about blockchain technology. Valuable lesson in market research.
+                            </p>
+                            <div class="investment-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Invested</span>
+                                    <span class="detail-value">$200K</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Loss</span>
+                                    <span class="detail-value">-$200K</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Lesson</span>
+                                    <span class="detail-value status-failed">Expensive</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Another Learning Experience -->
+                    <div class="portfolio-item failed" data-category="failed">
+                        <div class="portfolio-logo">
+                            <div class="logo-placeholder failed">
+                                <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                                    <rect width="80" height="80" rx="16" fill="var(--warning-color)"/>
+                                    <path d="M40 20L48 40H32L40 20Z" fill="white"/>
+                                    <circle cx="40" cy="55" r="3" fill="white"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <h3 class="company-name">FoodieBot</h3>
+                            <p class="company-category">FoodTech • Series A → Pivoted to Death</p>
+                            <p class="company-description">
+                                AI-powered food delivery robot that was supposed to revolutionize takeout. 
+                                Turns out people prefer their food delivered by humans who don't get confused by stairs.
+                            </p>
+                            <div class="investment-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Invested</span>
+                                    <span class="detail-value">$180K</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Recovery</span>
+                                    <span class="detail-value">$15K</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Status</span>
+                                    <span class="detail-value status-failed">RIP</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Investment Philosophy -->
+                <div class="investment-philosophy">
+                    <h2>Our Investment Philosophy</h2>
+                    <div class="philosophy-grid">
+                        <div class="philosophy-item">
+                            <div class="philosophy-icon">💡</div>
+                            <h3>Innovation First</h3>
+                            <p>We invest in companies solving real problems with creative solutions, even if those solutions seem crazy at first.</p>
+                        </div>
+                        <div class="philosophy-item">
+                            <div class="philosophy-icon">🚀</div>
+                            <h3>Growth Potential</h3>
+                            <p>We look for businesses that can scale rapidly and disrupt established markets. Sometimes we're right, sometimes... well, see PetCoin.</p>
+                        </div>
+                        <div class="philosophy-item">
+                            <div class="philosophy-icon">👥</div>
+                            <h3>Great Teams</h3>
+                            <p>We bet on exceptional founders who can execute their vision, adapt to challenges, and build strong company cultures.</p>
+                        </div>
+                        <div class="philosophy-item">
+                            <div class="philosophy-icon">🎯</div>
+                            <h3>Long-term Focus</h3>
+                            <p>We're patient investors who understand that building great companies takes time. Our average hold period is 5-7 years.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Headquarters Ventures</h3>
+                    <p>Geniuses doing business.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Content</h4>
+                        <ul>
+                            <li><a href="https://www.youtube.com/channel/UCN69r7v5sBAwbb3aWlqY1YA" target="_blank">YouTube</a></li>
+                            <li><a href="#" id="footer-spotify">Spotify</a></li>
+                            <li><a href="#" id="footer-apple">Apple Podcasts</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-group">
+                        <h4>Newsletter</h4>
+                        <ul>
+                            <li><a href="https://www.incompetencewetrust.com" target="_blank">Visit Site</a></li>
+                            <li><a href="#subscribe">Subscribe</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-group">
+                        <h4>Connect</h4>
+                        <ul>
+                            <li><a href="#" id="footer-x">X</a></li>
+                            <li><a href="https://www.instagram.com/headquartersventures/" target="_blank">Instagram</a></li>
+                            <li><a href="#" id="footer-linkedin">LinkedIn</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Headquarters Ventures. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/app.js"></script>
+</body>
+</html>

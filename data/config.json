@@ -1,0 +1,14 @@
+{
+  "site_name": "Headquarters Ventures",
+  "tagline": "Business, comedy, and the occasional bad idea.",
+  "accent_color": "#FFD200",
+  "on_air": false,
+  "live_youtube_id": "dQw4w9WgXcQ",
+  "subscribe_embed": "<!-- Paste your Substack/Beehiiv embed here -->",
+  "social": {
+    "x": "#",
+    "youtube": "#",
+    "spotify": "#",
+    "apple": "#"
+  }
+}
