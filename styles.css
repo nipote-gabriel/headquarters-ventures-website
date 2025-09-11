@@ -524,6 +524,10 @@ a:hover {
     margin-bottom: var(--spacing-8);
 }
 
+.newsletter-section-compact h3 {
+    margin-bottom: var(--spacing-4);
+}
+
 .newsletter-section-compact .email-signup {
     margin-bottom: 0;
 }
