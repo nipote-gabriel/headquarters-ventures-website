@@ -1,6 +1,11 @@
 # Headquarters Ventures — Vercel-ready Static Site
 
-## Deploy on Vercel (no build step)
+## Automatic Deployment
+This site is now connected to GitHub and deploys automatically!
+- Repository: https://github.com/nipote-gabriel/headquarters-ventures-website
+- Any push to the main branch triggers automatic deployment
+
+## Manual Deploy (if needed)
 1) `npm i -g vercel` (once)
 2) In this folder: `vercel --prod`
 3) Add your domain in **Project → Settings → Domains** and follow the DNS prompts.
