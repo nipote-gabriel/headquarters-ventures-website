@@ -28,6 +28,7 @@ class HQVSite {
             this.setupNewsletterSignup();
             this.setupFooterLinks();
             this.setupPortfolioTracker();
+            this.setupStockTicker();
             
         } catch (error) {
             console.error('Error initializing site:', error);
@@ -387,6 +388,73 @@ class HQVSite {
         ctx.lineTo(0, height);
         ctx.fill();
         ctx.globalAlpha = 1;
+    }
+
+    setupStockTicker() {
+        // Top 100 most important stocks
+        const stocks = [
+            // Tech Giants
+            'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'NVDA', 'META', 'NFLX', 'CRM', 'ORCL',
+            'ADBE', 'PYPL', 'INTC', 'AMD', 'UBER', 'LYFT', 'SHOP', 'SQ', 'ZOOM', 'DOCU',
+            'SNOW', 'PLTR', 'RBLX', 'TWTR', 'PINS', 'SNAP', 'SPOT', 'ZM', 'CRWD', 'OKTA',
+            
+            // Financial
+            'JPM', 'BAC', 'WFC', 'GS', 'MS', 'C', 'V', 'MA', 'AXP', 'BLK',
+            'SPY', 'QQQ', 'BRK.B', 'SCHW', 'USB', 'TFC', 'PNC', 'COF', 'AIG', 'MET',
+            
+            // Healthcare & Pharma
+            'JNJ', 'UNH', 'PFE', 'MRNA', 'ABBV', 'TMO', 'ABT', 'CVS', 'MRK', 'LLY',
+            'GILD', 'AMGN', 'BMY', 'MDT', 'ISRG', 'CI', 'HUM', 'ANTM', 'REGN', 'VRTX',
+            
+            // Consumer & Retail  
+            'WMT', 'HD', 'MCD', 'COST', 'NKE', 'SBUX', 'TGT', 'LOW', 'DIS', 'CMCSA',
+            'KO', 'PEP', 'PG', 'WBA', 'CVX', 'XOM', 'F', 'GM', 'DAL', 'UAL',
+            
+            // Industrial & Energy
+            'BA', 'CAT', 'GE', 'MMM', 'HON', 'UPS', 'FDX', 'LMT', 'RTX', 'NOC',
+            'COP', 'SLB', 'EOG', 'KMI', 'OXY', 'MPC', 'VLO', 'PSX', 'HES', 'DVN'
+        ];
+
+        const stockTicker = document.getElementById('stock-ticker');
+        if (!stockTicker) return;
+
+        // Generate ticker content with realistic prices
+        const tickerItems = stocks.map(symbol => {
+            const basePrice = Math.random() * 500 + 50; // $50-$550
+            const change = (Math.random() - 0.5) * 20; // -$10 to +$10
+            const percentChange = (change / basePrice) * 100;
+            const isPositive = change >= 0;
+            const sign = isPositive ? '+' : '';
+            
+            const color = isPositive ? '#00ff88' : '#ff4757';
+            
+            return `<span class="ticker-item" style="color: ${color}">${symbol} $${basePrice.toFixed(2)} ${sign}${change.toFixed(2)} (${sign}${percentChange.toFixed(2)}%)</span>`;
+        });
+
+        // Update ticker content
+        const tickerContent = stockTicker.querySelector('.ticker-content');
+        if (tickerContent) {
+            tickerContent.innerHTML = tickerItems.join('');
+        }
+
+        // Update ticker every 30 seconds with new prices
+        setInterval(() => {
+            const newTickerItems = stocks.map(symbol => {
+                const basePrice = Math.random() * 500 + 50;
+                const change = (Math.random() - 0.5) * 20;
+                const percentChange = (change / basePrice) * 100;
+                const isPositive = change >= 0;
+                const sign = isPositive ? '+' : '';
+                
+                const color = isPositive ? '#00ff88' : '#ff4757';
+                
+                return `<span class="ticker-item" style="color: ${color}">${symbol} $${basePrice.toFixed(2)} ${sign}${change.toFixed(2)} (${sign}${percentChange.toFixed(2)}%)</span>`;
+            });
+            
+            if (tickerContent) {
+                tickerContent.innerHTML = newTickerItems.join('');
+            }
+        }, 30000);
     }
 }
 
