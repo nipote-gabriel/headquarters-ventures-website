@@ -113,10 +113,13 @@
 
                     <!-- Side Info Panel -->
                     <div class="info-column">
-                    <div class="podcast-info">
-                        <div class="podcast-artwork-large">
-                            <img src="logo.png" alt="Headquarters Ventures Logo" class="logo-large">
-                        </div>
+                    <!-- HQ Logo Section -->
+                    <div class="logo-section-large">
+                        <img src="logo.png" alt="Headquarters Ventures Logo" class="logo-full-width">
+                    </div>
+
+                    <!-- Slogan Section -->
+                    <div class="slogan-section">
                         <p class="podcast-slogan">Geniuses doing business.</p>
                         
                         <!-- Live Indicator -->
@@ -135,19 +138,25 @@
                                 <span class="status-value" id="status-value">+$23.50 (+1.59%)</span>
                             </div>
                         </div>
-                        <div class="portfolio-content">
-                            <div class="portfolio-holding">
-                                <span class="holding-symbol">AAPL</span>
-                                <span class="holding-shares">10 shares</span>
-                                <span class="holding-value" id="aapl-value">$1,502.50</span>
+                        <!-- Portfolio Summary -->
+                        <div class="portfolio-summary">
+                            <p id="portfolio-summary-text">Our diversified tech-heavy portfolio focuses on high-growth companies with strong fundamentals. Currently overweight in FAANG stocks and emerging AI leaders.</p>
+                        </div>
+                        
+                        <!-- Scrollable Holdings Container -->
+                        <div class="portfolio-holdings-container">
+                            <h4>Key Holdings (>10% of portfolio)</h4>
+                            <div class="portfolio-holdings-scroll" id="portfolio-holdings">
+                                <!-- Holdings will be populated by JavaScript -->
                             </div>
-                            <div class="portfolio-chart" id="portfolio-chart">
-                                <canvas id="portfolio-canvas" width="200" height="60"></canvas>
-                            </div>
-                            <div class="portfolio-total">
-                                <span class="total-label">Total Value:</span>
-                                <span class="total-value" id="total-value">$1,502.50</span>
-                            </div>
+                        </div>
+                        
+                        <div class="portfolio-chart" id="portfolio-chart">
+                            <canvas id="portfolio-canvas" width="200" height="60"></canvas>
+                        </div>
+                        <div class="portfolio-total">
+                            <span class="total-label">Total Value:</span>
+                            <span class="total-value" id="total-value">$1,502.50</span>
                         </div>
                     </div>
 

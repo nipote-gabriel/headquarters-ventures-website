@@ -263,39 +263,91 @@ class HQVSite {
     }
 
     setupPortfolioTracker() {
-        // Mock Apple stock data - in reality this would come from an API
-        let currentPrice = 150.25;
-        let previousPrice = 147.90;
-        let change = currentPrice - previousPrice;
-        let changePercent = (change / previousPrice) * 100;
-        let shares = 10;
-        let totalValue = currentPrice * shares;
+        // Portfolio holdings - diversified across major stocks
+        this.portfolioHoldings = [
+            { symbol: 'AAPL', name: 'Apple Inc.', shares: 12, price: 175.50 },
+            { symbol: 'MSFT', name: 'Microsoft Corp.', shares: 8, price: 410.25 },
+            { symbol: 'GOOGL', name: 'Alphabet Inc.', shares: 15, price: 140.80 },
+            { symbol: 'AMZN', name: 'Amazon.com Inc.', shares: 6, price: 180.45 },
+            { symbol: 'TSLA', name: 'Tesla Inc.', shares: 20, price: 250.90 },
+            { symbol: 'NVDA', name: 'NVIDIA Corp.', shares: 3, price: 880.60 },
+            { symbol: 'META', name: 'Meta Platforms', shares: 10, price: 320.15 },
+            { symbol: 'NFLX', name: 'Netflix Inc.', shares: 4, price: 450.30 },
+            { symbol: 'V', name: 'Visa Inc.', shares: 7, price: 260.40 },
+            { symbol: 'JPM', name: 'JPMorgan Chase', shares: 9, price: 145.25 }
+        ];
+
+        // Calculate total portfolio value
+        let totalValue = this.portfolioHoldings.reduce((sum, holding) => 
+            sum + (holding.shares * holding.price), 0);
+
+        // Mock performance data
+        let previousValue = totalValue * 0.985; // Simulate 1.5% gain
+        let change = totalValue - previousValue;
+        let changePercent = (change / previousValue) * 100;
 
         // Generate mock chart data
-        const chartData = this.generateMockChartData(previousPrice, currentPrice);
+        const chartData = this.generateMockChartData(previousValue, totalValue);
 
         // Update portfolio display
         this.updatePortfolioDisplay(change, changePercent, totalValue);
+        this.updatePortfolioHoldings(totalValue);
 
         // Draw chart
         this.drawPortfolioChart(chartData);
 
         // Simulate real-time updates every 30 seconds
         setInterval(() => {
-            // Simulate price fluctuation
-            const fluctuation = (Math.random() - 0.5) * 2; // -1 to +1
-            currentPrice += fluctuation;
-            change = currentPrice - previousPrice;
-            changePercent = (change / previousPrice) * 100;
-            totalValue = currentPrice * shares;
+            // Simulate price fluctuations for each holding
+            this.portfolioHoldings.forEach(holding => {
+                const fluctuation = (Math.random() - 0.5) * 0.02; // ±1% price movement
+                holding.price *= (1 + fluctuation);
+            });
+
+            // Recalculate totals
+            totalValue = this.portfolioHoldings.reduce((sum, holding) => 
+                sum + (holding.shares * holding.price), 0);
+            change = totalValue - previousValue;
+            changePercent = (change / previousValue) * 100;
 
             this.updatePortfolioDisplay(change, changePercent, totalValue);
+            this.updatePortfolioHoldings(totalValue);
             
             // Update chart data and redraw
-            chartData.push(currentPrice);
+            chartData.push(totalValue);
             if (chartData.length > 20) chartData.shift(); // Keep only last 20 points
             this.drawPortfolioChart(chartData);
         }, 30000);
+    }
+
+    updatePortfolioHoldings(totalValue) {
+        const holdingsContainer = document.getElementById('portfolio-holdings');
+        if (!holdingsContainer) return;
+
+        // Filter holdings that account for >10% of portfolio
+        const keyHoldings = this.portfolioHoldings
+            .map(holding => ({
+                ...holding,
+                value: holding.shares * holding.price,
+                percentage: ((holding.shares * holding.price) / totalValue) * 100
+            }))
+            .filter(holding => holding.percentage > 10)
+            .sort((a, b) => b.percentage - a.percentage); // Sort by percentage descending
+
+        const holdingsHtml = keyHoldings.map(holding => `
+            <div class="key-holding-item">
+                <div class="holding-info">
+                    <div class="holding-symbol">${holding.symbol}</div>
+                    <div class="holding-name">${holding.name}</div>
+                </div>
+                <div class="holding-details">
+                    <div class="holding-value">$${holding.value.toFixed(2)}</div>
+                    <div class="holding-percentage">${holding.percentage.toFixed(1)}%</div>
+                </div>
+            </div>
+        `).join('');
+
+        holdingsContainer.innerHTML = holdingsHtml;
     }
 
     generateMockChartData(startPrice, endPrice) {
