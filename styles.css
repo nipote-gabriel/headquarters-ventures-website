@@ -525,7 +525,7 @@ a:hover {
 }
 
 .newsletter-section-compact .email-signup {
-    margin-bottom: var(--spacing-4);
+    margin-bottom: var(--spacing-2);
 }
 
 .newsletter-form {
