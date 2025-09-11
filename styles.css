@@ -524,12 +524,20 @@ a:hover {
     margin-bottom: var(--spacing-8);
 }
 
+.newsletter-section-compact .section-header {
+    margin-bottom: var(--spacing-2);
+}
+
 .newsletter-section-compact h3 {
-    margin-bottom: var(--spacing-4);
+    margin-bottom: 0;
 }
 
 .newsletter-section-compact .email-signup {
     margin-bottom: 0;
+}
+
+.newsletter-section-compact .newsletter-description {
+    margin-bottom: var(--spacing-3);
 }
 
 .beehiiv-embed {
