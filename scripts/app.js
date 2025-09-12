@@ -29,6 +29,7 @@ class HQVSite {
             this.setupFooterLinks();
             this.setupPortfolioTracker();
             this.setupStockTicker();
+            this.setupInfoHubScroll();
             
         } catch (error) {
             console.error('Error initializing site:', error);
@@ -571,6 +572,59 @@ class HQVSite {
         if (tickerContent) {
             tickerContent.innerHTML = tickerItems.join('');
         }
+    }
+
+    setupInfoHubScroll() {
+        const infoColumn = document.querySelector('.info-column');
+        if (!infoColumn) return;
+
+        let isScrolling = false;
+
+        // Sync page scroll with info hub scroll
+        window.addEventListener('scroll', () => {
+            if (isScrolling) return;
+            
+            // Get scroll percentage of the page
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollPercent = scrollTop / (documentHeight - windowHeight);
+            
+            // Apply the same scroll percentage to info hub
+            const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
+            const targetScroll = scrollPercent * infoScrollHeight;
+            
+            isScrolling = true;
+            infoColumn.scrollTop = targetScroll;
+            
+            // Reset flag after a short delay
+            setTimeout(() => {
+                isScrolling = false;
+            }, 50);
+        });
+
+        // Optional: Also sync info hub scroll back to page (if you want bidirectional)
+        infoColumn.addEventListener('scroll', () => {
+            if (isScrolling) return;
+            
+            // Get scroll percentage of info hub
+            const infoScrollTop = infoColumn.scrollTop;
+            const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
+            const infoScrollPercent = infoScrollHeight > 0 ? infoScrollTop / infoScrollHeight : 0;
+            
+            // Apply to page scroll
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const targetPageScroll = infoScrollPercent * (documentHeight - windowHeight);
+            
+            isScrolling = true;
+            window.scrollTo(0, targetPageScroll);
+            
+            // Reset flag after a short delay
+            setTimeout(() => {
+                isScrolling = false;
+            }, 50);
+        });
     }
 }
 
