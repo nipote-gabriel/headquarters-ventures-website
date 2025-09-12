@@ -29,6 +29,7 @@ class HQVSite {
             this.setupFooterLinks();
             this.setupPortfolioTracker();
             this.setupStockTicker();
+            this.setupAdTicker();
             this.setupInfoHubScroll();
             
         } catch (error) {
@@ -572,6 +573,44 @@ class HQVSite {
         if (tickerContent) {
             tickerContent.innerHTML = tickerItems.join('');
         }
+    }
+
+    setupAdTicker() {
+        console.log('Setting up ad ticker...');
+        
+        const adTicker = document.getElementById('ad-ticker');
+        console.log('Ad ticker element found:', adTicker);
+        
+        if (!adTicker) {
+            console.error('Ad ticker element not found!');
+            return;
+        }
+        
+        // Force visibility
+        adTicker.style.display = 'block';
+        adTicker.style.visibility = 'visible';
+        adTicker.style.opacity = '1';
+        
+        // Check content
+        const tickerContent = adTicker.querySelector('.ticker-content');
+        console.log('Ad ticker content element:', tickerContent);
+        
+        if (tickerContent) {
+            console.log('Ad ticker content innerHTML:', tickerContent.innerHTML);
+            // Force content if empty
+            if (!tickerContent.innerHTML.trim()) {
+                console.log('Ad ticker content was empty, adding content...');
+                tickerContent.innerHTML = `
+                    <span class="ticker-item">🚀 Invest with Robinhood - Commission-free trading</span>
+                    <span class="ticker-item">💰 Try Betterment - Automated investing made easy</span>
+                    <span class="ticker-item">📈 E*TRADE - Power tools for active traders</span>
+                    <span class="ticker-item">🏦 Charles Schwab - Your financial partner</span>
+                    <span class="ticker-item">💳 Chase Sapphire - Earn rewards on every purchase</span>
+                `;
+            }
+        }
+        
+        console.log('Ad ticker setup complete');
     }
 
     setupInfoHubScroll() {
