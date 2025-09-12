@@ -576,9 +576,17 @@ class HQVSite {
 
     setupInfoHubScroll() {
         const infoColumn = document.querySelector('.info-column');
-        if (!infoColumn) return;
+        if (!infoColumn) {
+            console.log('Info column not found');
+            return;
+        }
 
         let isScrolling = false;
+
+        // Debug: Check if info column is scrollable
+        console.log('Info column scroll height:', infoColumn.scrollHeight);
+        console.log('Info column client height:', infoColumn.clientHeight);
+        console.log('Info column is scrollable:', infoColumn.scrollHeight > infoColumn.clientHeight);
 
         // Sync page scroll with info hub scroll
         window.addEventListener('scroll', () => {
@@ -588,43 +596,33 @@ class HQVSite {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const windowHeight = window.innerHeight;
             const documentHeight = document.documentElement.scrollHeight;
-            const scrollPercent = scrollTop / (documentHeight - windowHeight);
+            
+            // Prevent division by zero
+            if (documentHeight <= windowHeight) return;
+            
+            const scrollPercent = Math.max(0, Math.min(1, scrollTop / (documentHeight - windowHeight)));
             
             // Apply the same scroll percentage to info hub
             const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
-            const targetScroll = scrollPercent * infoScrollHeight;
             
-            isScrolling = true;
-            infoColumn.scrollTop = targetScroll;
-            
-            // Reset flag after a short delay
-            setTimeout(() => {
-                isScrolling = false;
-            }, 50);
+            if (infoScrollHeight > 0) {
+                const targetScroll = scrollPercent * infoScrollHeight;
+                
+                isScrolling = true;
+                infoColumn.scrollTop = targetScroll;
+                
+                // Debug log
+                console.log('Page scroll %:', (scrollPercent * 100).toFixed(1), 'Info Hub scroll:', targetScroll);
+                
+                // Reset flag after a short delay
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 50);
+            }
         });
 
-        // Optional: Also sync info hub scroll back to page (if you want bidirectional)
-        infoColumn.addEventListener('scroll', () => {
-            if (isScrolling) return;
-            
-            // Get scroll percentage of info hub
-            const infoScrollTop = infoColumn.scrollTop;
-            const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
-            const infoScrollPercent = infoScrollHeight > 0 ? infoScrollTop / infoScrollHeight : 0;
-            
-            // Apply to page scroll
-            const windowHeight = window.innerHeight;
-            const documentHeight = document.documentElement.scrollHeight;
-            const targetPageScroll = infoScrollPercent * (documentHeight - windowHeight);
-            
-            isScrolling = true;
-            window.scrollTo(0, targetPageScroll);
-            
-            // Reset flag after a short delay
-            setTimeout(() => {
-                isScrolling = false;
-            }, 50);
-        });
+        // Make info hub scroll smoother
+        infoColumn.style.scrollBehavior = 'auto';
     }
 }
 
