@@ -1051,6 +1051,7 @@ a:hover {
     top: 60px; /* Position below stock ticker */
     left: 0;
     right: 0;
+    background: rgba(255, 0, 0, 0.8) !important; /* Temporary red background for debugging */
 }
 
 .ticker-content {
@@ -1072,12 +1073,20 @@ a:hover {
 
 .ad-ticker .ticker-content {
     animation: scroll-left 120s linear infinite;
+    color: #ffd700 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-block !important;
 }
 
 .ad-ticker .ticker-item {
-    color: #ffd700;
-    font-size: 16px;
-    font-weight: 500;
+    color: #ffd700 !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline !important;
+    margin-right: 3rem !important;
 }
 
 @keyframes scroll-left {
