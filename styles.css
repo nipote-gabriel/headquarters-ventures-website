@@ -891,6 +891,10 @@ a:hover {
         margin-bottom: var(--spacing-2);
     }
     
+    .newsletter-section-compact h3 {
+        font-size: var(--font-size-lg);
+    }
+    
     .newsletter-section-compact .newsletter-description {
         margin-bottom: var(--spacing-3);
         font-size: var(--font-size-sm);
@@ -1015,8 +1019,15 @@ a:hover {
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 10;
+    z-index: 100;
     pointer-events: none;
+}
+
+/* Ensure ticker is visible on all screen sizes */
+@media (min-width: 769px) {
+    .ticker-container {
+        display: block;
+    }
 }
 
 .stock-ticker,

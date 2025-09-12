@@ -575,54 +575,53 @@ class HQVSite {
     }
 
     setupInfoHubScroll() {
-        const infoColumn = document.querySelector('.info-column');
-        if (!infoColumn) {
-            console.log('Info column not found');
-            return;
-        }
-
-        let isScrolling = false;
-
-        // Debug: Check if info column is scrollable
-        console.log('Info column scroll height:', infoColumn.scrollHeight);
-        console.log('Info column client height:', infoColumn.clientHeight);
-        console.log('Info column is scrollable:', infoColumn.scrollHeight > infoColumn.clientHeight);
-
-        // Sync page scroll with info hub scroll
-        window.addEventListener('scroll', () => {
-            if (isScrolling) return;
-            
-            // Get scroll percentage of the page
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const windowHeight = window.innerHeight;
-            const documentHeight = document.documentElement.scrollHeight;
-            
-            // Prevent division by zero
-            if (documentHeight <= windowHeight) return;
-            
-            const scrollPercent = Math.max(0, Math.min(1, scrollTop / (documentHeight - windowHeight)));
-            
-            // Apply the same scroll percentage to info hub
-            const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
-            
-            if (infoScrollHeight > 0) {
-                const targetScroll = scrollPercent * infoScrollHeight;
-                
-                isScrolling = true;
-                infoColumn.scrollTop = targetScroll;
-                
-                // Debug log
-                console.log('Page scroll %:', (scrollPercent * 100).toFixed(1), 'Info Hub scroll:', targetScroll);
-                
-                // Reset flag after a short delay
-                setTimeout(() => {
-                    isScrolling = false;
-                }, 50);
+        // Wait for page to fully load before setting up scroll sync
+        setTimeout(() => {
+            const infoColumn = document.querySelector('.info-column');
+            if (!infoColumn) {
+                console.log('Info column not found');
+                return;
             }
-        });
 
-        // Make info hub scroll smoother
-        infoColumn.style.scrollBehavior = 'auto';
+            let ticking = false;
+
+            const syncScroll = () => {
+                // Get scroll percentage of the page
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight - windowHeight;
+                
+                if (documentHeight <= 0) return;
+                
+                const scrollPercent = Math.max(0, Math.min(1, scrollTop / documentHeight));
+                
+                // Apply the same scroll percentage to info hub
+                const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
+                
+                if (infoScrollHeight > 0) {
+                    const targetScroll = scrollPercent * infoScrollHeight;
+                    infoColumn.scrollTop = targetScroll;
+                }
+                
+                ticking = false;
+            };
+
+            // Use requestAnimationFrame for smooth scrolling
+            const handleScroll = () => {
+                if (!ticking) {
+                    requestAnimationFrame(syncScroll);
+                    ticking = true;
+                }
+            };
+
+            // Add scroll event listener
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            
+            // Initial sync
+            syncScroll();
+            
+            console.log('Scroll sync initialized');
+        }, 1000); // Wait 1 second for everything to load
     }
 }
 
