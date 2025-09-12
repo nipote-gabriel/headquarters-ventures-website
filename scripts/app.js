@@ -578,18 +578,48 @@ class HQVSite {
     setupAdTicker() {
         console.log('Setting up ad ticker...');
         
-        const adTicker = document.getElementById('ad-ticker');
+        const tickerContainer = document.querySelector('.ticker-container');
+        console.log('Ticker container found:', tickerContainer);
+        
+        let adTicker = document.getElementById('ad-ticker');
         console.log('Ad ticker element found:', adTicker);
         
         if (!adTicker) {
-            console.error('Ad ticker element not found!');
-            return;
+            console.log('Ad ticker not found, creating it...');
+            // Create the ad ticker element
+            adTicker = document.createElement('div');
+            adTicker.className = 'ad-ticker';
+            adTicker.id = 'ad-ticker';
+            
+            // Create ticker content
+            const tickerContent = document.createElement('div');
+            tickerContent.className = 'ticker-content';
+            tickerContent.innerHTML = `
+                <span class="ticker-item">🚀 Invest with Robinhood - Commission-free trading</span>
+                <span class="ticker-item">💰 Try Betterment - Automated investing made easy</span>
+                <span class="ticker-item">📈 E*TRADE - Power tools for active traders</span>
+                <span class="ticker-item">🏦 Charles Schwab - Your financial partner</span>
+                <span class="ticker-item">💳 Chase Sapphire - Earn rewards on every purchase</span>
+            `;
+            
+            adTicker.appendChild(tickerContent);
+            
+            // Add to ticker container
+            if (tickerContainer) {
+                tickerContainer.appendChild(adTicker);
+                console.log('Created and added ad ticker to container');
+            } else {
+                console.error('Ticker container not found!');
+                return;
+            }
         }
         
-        // Force visibility
+        // Force visibility regardless
         adTicker.style.display = 'block';
         adTicker.style.visibility = 'visible';
         adTicker.style.opacity = '1';
+        adTicker.style.position = 'static';
+        adTicker.style.background = 'rgba(255, 0, 0, 0.8)';
         
         // Check content
         const tickerContent = adTicker.querySelector('.ticker-content');
@@ -597,20 +627,11 @@ class HQVSite {
         
         if (tickerContent) {
             console.log('Ad ticker content innerHTML:', tickerContent.innerHTML);
-            // Force content if empty
-            if (!tickerContent.innerHTML.trim()) {
-                console.log('Ad ticker content was empty, adding content...');
-                tickerContent.innerHTML = `
-                    <span class="ticker-item">🚀 Invest with Robinhood - Commission-free trading</span>
-                    <span class="ticker-item">💰 Try Betterment - Automated investing made easy</span>
-                    <span class="ticker-item">📈 E*TRADE - Power tools for active traders</span>
-                    <span class="ticker-item">🏦 Charles Schwab - Your financial partner</span>
-                    <span class="ticker-item">💳 Chase Sapphire - Earn rewards on every purchase</span>
-                `;
-            }
+            tickerContent.style.display = 'inline-block';
+            tickerContent.style.color = '#ffd700';
         }
         
-        console.log('Ad ticker setup complete');
+        console.log('Ad ticker setup complete - element should now be visible');
     }
 
     setupInfoHubScroll() {
