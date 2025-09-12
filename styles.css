@@ -346,6 +346,7 @@ a:hover {
     position: relative;
     height: 100%;
     width: 100%;
+    overflow: visible;
 }
 
 .video-embedded-large {
@@ -1019,15 +1020,14 @@ a:hover {
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 100;
+    z-index: 1000;
     pointer-events: none;
+    display: block !important;
 }
 
-/* Ensure ticker is visible on all screen sizes */
-@media (min-width: 769px) {
-    .ticker-container {
-        display: block;
-    }
+/* Debug: Add border to see if container is there */
+.ticker-container {
+    border: 2px solid red !important;
 }
 
 .stock-ticker,

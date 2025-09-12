@@ -575,53 +575,75 @@ class HQVSite {
     }
 
     setupInfoHubScroll() {
-        // Wait for page to fully load before setting up scroll sync
+        console.log('Setting up Info Hub scroll...');
+        
+        // Wait for page to fully load
         setTimeout(() => {
             const infoColumn = document.querySelector('.info-column');
+            console.log('Info column element:', infoColumn);
+            
             if (!infoColumn) {
-                console.log('Info column not found');
+                console.error('Info column not found!');
                 return;
             }
 
-            let ticking = false;
+            // Log dimensions
+            console.log('Info column scrollHeight:', infoColumn.scrollHeight);
+            console.log('Info column clientHeight:', infoColumn.clientHeight);
+            console.log('Info column scrollable height:', infoColumn.scrollHeight - infoColumn.clientHeight);
+            console.log('Document scrollHeight:', document.documentElement.scrollHeight);
+            console.log('Window height:', window.innerHeight);
+
+            let isScrolling = false;
 
             const syncScroll = () => {
-                // Get scroll percentage of the page
+                // Get current page scroll
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                 const windowHeight = window.innerHeight;
-                const documentHeight = document.documentElement.scrollHeight - windowHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+                const maxPageScroll = documentHeight - windowHeight;
                 
-                if (documentHeight <= 0) return;
+                if (maxPageScroll <= 0) {
+                    console.log('Page not scrollable');
+                    return;
+                }
                 
-                const scrollPercent = Math.max(0, Math.min(1, scrollTop / documentHeight));
+                const scrollPercent = scrollTop / maxPageScroll;
+                console.log('Page scroll percent:', (scrollPercent * 100).toFixed(1) + '%');
                 
-                // Apply the same scroll percentage to info hub
+                // Apply to info hub
                 const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
                 
                 if (infoScrollHeight > 0) {
                     const targetScroll = scrollPercent * infoScrollHeight;
                     infoColumn.scrollTop = targetScroll;
+                    console.log('Setting info hub scroll to:', targetScroll);
+                } else {
+                    console.log('Info hub not scrollable');
                 }
-                
-                ticking = false;
             };
 
-            // Use requestAnimationFrame for smooth scrolling
+            // Simple scroll handler without throttling for debugging
             const handleScroll = () => {
-                if (!ticking) {
-                    requestAnimationFrame(syncScroll);
-                    ticking = true;
+                if (!isScrolling) {
+                    isScrolling = true;
+                    syncScroll();
+                    setTimeout(() => {
+                        isScrolling = false;
+                    }, 16); // ~60fps
                 }
             };
 
-            // Add scroll event listener
-            window.addEventListener('scroll', handleScroll, { passive: true });
+            // Add scroll listener
+            window.addEventListener('scroll', handleScroll);
             
-            // Initial sync
+            // Test initial state
+            console.log('Initial scroll sync...');
             syncScroll();
             
-            console.log('Scroll sync initialized');
-        }, 1000); // Wait 1 second for everything to load
+            console.log('Info Hub scroll synchronization setup complete!');
+            
+        }, 2000); // Wait 2 seconds for everything to load
     }
 }
 
