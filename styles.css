@@ -1023,7 +1023,7 @@ a:hover {
     z-index: 1000;
     pointer-events: none;
     display: block;
-    height: 120px; /* Make container tall enough for both tickers */
+    background: rgba(255, 255, 0, 0.3); /* Debug yellow background for container */
 }
 
 .stock-ticker,
@@ -1033,25 +1033,18 @@ a:hover {
     height: 60px;
     overflow: hidden;
     white-space: nowrap;
-    position: relative;
-    display: block;
+    position: static; /* Change from relative to static */
+    display: block !important;
     width: 100%;
 }
 
 .stock-ticker {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .ad-ticker {
-    position: absolute;
-    top: 60px; /* Position below stock ticker */
-    left: 0;
-    right: 0;
-    background: rgba(255, 0, 0, 0.8) !important; /* Temporary red background for debugging */
+    background: rgba(255, 0, 0, 0.8) !important; /* Red background for debugging */
+    margin-top: 0;
 }
 
 .ticker-content {
