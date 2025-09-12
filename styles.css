@@ -1038,10 +1038,17 @@ a:hover {
     overflow: hidden;
     white-space: nowrap;
     position: relative;
+    display: block !important;
 }
 
 .stock-ticker {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Debug ad ticker specifically */
+.ad-ticker {
+    background: rgba(255, 0, 0, 0.85) !important;
+    border: 2px solid yellow !important;
 }
 
 .ticker-content {
@@ -1063,10 +1070,15 @@ a:hover {
 
 .ad-ticker .ticker-content {
     animation: scroll-left 120s linear infinite;
+    background: rgba(0, 255, 0, 0.3) !important;
+    border: 1px solid lime !important;
 }
 
 .ad-ticker .ticker-item {
-    color: #ffd700;
+    color: #ffd700 !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    background: rgba(0, 0, 255, 0.3) !important;
 }
 
 @keyframes scroll-left {
