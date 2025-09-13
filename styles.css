@@ -1271,6 +1271,62 @@ a:hover {
     color: var(--text-secondary);
 }
 
+/* Sponsors Section */
+.sponsors-section {
+    background: var(--background-secondary);
+    padding: var(--spacing-6);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--border-color);
+    margin-bottom: var(--spacing-6);
+}
+
+.sponsors-section h3 {
+    margin-bottom: var(--spacing-4);
+    color: var(--secondary-color);
+    font-size: var(--font-size-lg);
+    text-align: center;
+}
+
+.sponsors-carousel {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.sponsors-track {
+    display: flex;
+    width: calc(150px * 8); /* 150px per slide, 4 sponsors duplicated */
+    animation: scroll-sponsors 20s linear infinite;
+}
+
+.sponsor-slide {
+    width: 150px;
+    flex-shrink: 0;
+    padding: 0 20px;
+}
+
+.sponsor-slide img {
+    width: 100%;
+    height: auto;
+    filter: grayscale(100%) contrast(0.5);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.sponsor-slide:hover img {
+    filter: grayscale(0) contrast(1);
+    opacity: 1;
+}
+
+@keyframes scroll-sponsors {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-150px * 4)); /* scroll by the width of the original 4 sponsors */
+    }
+}
+
 /* Live Indicator */
 .live-indicator {
     position: absolute;
