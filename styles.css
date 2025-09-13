@@ -572,6 +572,7 @@ a:hover {
 
 .newsletter-section-compact h3 {
     margin-bottom: 0;
+    font-size: var(--font-size-lg);
 }
 
 .newsletter-section-compact .email-signup {
