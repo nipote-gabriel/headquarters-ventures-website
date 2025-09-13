@@ -588,21 +588,12 @@ class HQVSite {
             const sign = isPositive ? '+' : '';
             const color = isPositive ? '#00ff88' : '#ff4757';
             
-            return `<span class="ticker-item" style="color: ${color}">${symbol} ${basePrice.toFixed(2)} ${sign}${change.toFixed(2)} (${sign}${percentChange.toFixed(2)}%)</span>`;
+            return `<span class="ticker-item" style="color: ${color}">${symbol} $${basePrice.toFixed(2)} ${sign}${change.toFixed(2)} (${sign}${percentChange.toFixed(2)}%)</span>`;
         });
 
         if (tickerContent) {
             tickerContent.innerHTML = tickerItems.join('');
         }
-    }
-
-    setupInfohubScrolling() {
-        const infoColumn = document.querySelector('.info-column');
-        if (!infoColumn) return;
-
-        window.addEventListener('scroll', () => {
-            infoColumn.scrollTop = window.scrollY;
-        });
     }
 
 }
