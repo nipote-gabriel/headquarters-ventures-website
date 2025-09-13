@@ -32,15 +32,27 @@ class HQVSite {
             
         } catch (error) {
             console.error('Error initializing site:', error);
+            this.displayError('Error initializing site. Please try again later.');
         }
+    }
+
+    displayError(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.textContent = message;
+        document.body.appendChild(errorDiv);
     }
 
     async loadConfig() {
         try {
             const response = await fetch('/data/config.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             this.config = await response.json();
         } catch (error) {
             console.error('Error loading config:', error);
+            this.displayError('Could not load site configuration.');
             // Fallback config
             this.config = {
                 site_name: "Headquarters Ventures",
@@ -55,10 +67,14 @@ class HQVSite {
     async loadEpisodes() {
         try {
             const response = await fetch('/data/episodes.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const data = await response.json();
             this.episodes = data.episodes;
         } catch (error) {
             console.error('Error loading episodes:', error);
+            this.displayError('Could not load episodes.');
             this.episodes = [];
         }
     }
@@ -66,10 +82,14 @@ class HQVSite {
     async loadPosts() {
         try {
             const response = await fetch('/data/posts.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const data = await response.json();
             this.posts = data.posts.filter(post => post.published);
         } catch (error) {
             console.error('Error loading posts:', error);
+            this.displayError('Could not load posts.');
             this.posts = [];
         }
     }
@@ -79,6 +99,7 @@ class HQVSite {
         const mobileToggle = document.querySelector('.mobile-menu-toggle');
         const mobileOverlay = document.querySelector('.mobile-menu-overlay');
         const mobileClose = document.querySelector('.mobile-menu-close');
+        const navMenu = document.querySelector('.nav-menu');
 
         if (mobileToggle && mobileOverlay) {
             mobileToggle.addEventListener('click', () => {
@@ -493,7 +514,9 @@ class HQVSite {
     }
 
     async fetchStockData(symbols) {
-        const API_KEY = 'd31lo2pr01qsprr1j1pgd31lo2pr01qsprr1j1q0';
+        // IMPORTANT: Replace with your own Finnhub API key. 
+        // For security, it's recommended to use a backend proxy to hide your API key.
+        const API_KEY = 'YOUR_FINNHUB_API_KEY';
         const stockData = [];
         
         try {

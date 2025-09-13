@@ -1621,6 +1621,19 @@ section {
     }
 }
 
+/* Error Message */
+.error-message {
+    background-color: var(--error-color);
+    color: var(--secondary-color);
+    padding: var(--spacing-4);
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+}
+
 /* Animations */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
