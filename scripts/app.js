@@ -588,13 +588,39 @@ class HQVSite {
             const isPositive = change >= 0;
             const sign = isPositive ? '+' : '';
             const color = isPositive ? '#00ff88' : '#ff4757';
-            
+
             return `<span class="ticker-item" style="color: ${color}">${symbol} $${basePrice.toFixed(2)} ${sign}${change.toFixed(2)} (${sign}${percentChange.toFixed(2)}%)</span>`;
         });
 
         if (tickerContent) {
             tickerContent.innerHTML = tickerItems.join('');
         }
+    }
+
+    setupInfohubScrolling() {
+        // Synchronized scrolling between video and info column
+        const heroVideoContainer = document.querySelector('.hero-video-container');
+        const infoColumn = document.querySelector('.info-column');
+
+        if (!heroVideoContainer || !infoColumn) return;
+
+        // Ensure both containers can scroll together smoothly
+        let isScrolling = false;
+
+        function syncScroll(source, target) {
+            if (isScrolling) return;
+            isScrolling = true;
+
+            requestAnimationFrame(() => {
+                const scrollPercentage = source.scrollTop / (source.scrollHeight - source.clientHeight);
+                target.scrollTop = scrollPercentage * (target.scrollHeight - target.clientHeight);
+                isScrolling = false;
+            });
+        }
+
+        // Add smooth scroll behavior
+        heroVideoContainer.style.scrollBehavior = 'smooth';
+        infoColumn.style.scrollBehavior = 'smooth';
     }
 
 }
@@ -707,18 +733,6 @@ function subscribeToNewsletter() {
     // Open beehiiv subscription page with email pre-filled if possible
     const subscribeUrl = `https://in-competence-we-trust.beehiiv.com/subscribe?email=${encodeURIComponent(email)}`;
     window.open(subscribeUrl, '_blank');
-    
-    // Clear the input
-    emailInput.value = '';
-    
-    // Track subscription attempt
-    Analytics.trackEvent('Newsletter', 'Subscribe Attempt', email);
-}
-
-// Export for use in other scripts if needed
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { HQVSite, Analytics };
-}ank');
     
     // Clear the input
     emailInput.value = '';
