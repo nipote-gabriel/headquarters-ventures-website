@@ -29,7 +29,6 @@ class HQVSite {
             this.setupFooterLinks();
             this.setupPortfolioTracker();
             this.setupStockTicker();
-            this.setupInfohubScrolling();
             
         } catch (error) {
             console.error('Error initializing site:', error);
@@ -707,18 +706,6 @@ function subscribeToNewsletter() {
     // Open beehiiv subscription page with email pre-filled if possible
     const subscribeUrl = `https://in-competence-we-trust.beehiiv.com/subscribe?email=${encodeURIComponent(email)}`;
     window.open(subscribeUrl, '_blank');
-    
-    // Clear the input
-    emailInput.value = '';
-    
-    // Track subscription attempt
-    Analytics.trackEvent('Newsletter', 'Subscribe Attempt', email);
-}
-
-// Export for use in other scripts if needed
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { HQVSite, Analytics };
-}ank');
     
     // Clear the input
     emailInput.value = '';
