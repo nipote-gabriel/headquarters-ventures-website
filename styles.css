@@ -346,7 +346,6 @@ a:hover {
     position: relative;
     height: 100%;
     width: 100%;
-    overflow: visible;
 }
 
 .video-embedded-large {
@@ -1020,10 +1019,8 @@ a:hover {
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 10;
     pointer-events: none;
-    display: block;
-    background: rgba(255, 255, 0, 0.3); /* Debug yellow background for container */
 }
 
 .stock-ticker,
@@ -1033,18 +1030,11 @@ a:hover {
     height: 60px;
     overflow: hidden;
     white-space: nowrap;
-    position: static; /* Change from relative to static */
-    display: block !important;
-    width: 100%;
+    position: relative;
 }
 
 .stock-ticker {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.ad-ticker {
-    background: rgba(255, 0, 0, 0.8) !important; /* Red background for debugging */
-    margin-top: 0;
 }
 
 .ticker-content {
@@ -1066,20 +1056,10 @@ a:hover {
 
 .ad-ticker .ticker-content {
     animation: scroll-left 120s linear infinite;
-    color: #ffd700 !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: inline-block !important;
 }
 
 .ad-ticker .ticker-item {
-    color: #ffd700 !important;
-    font-size: 16px !important;
-    font-weight: bold !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: inline !important;
-    margin-right: 3rem !important;
+    color: #ffd700;
 }
 
 @keyframes scroll-left {
