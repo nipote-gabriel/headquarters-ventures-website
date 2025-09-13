@@ -576,62 +576,81 @@ class HQVSite {
     }
 
     setupAdTicker() {
-        console.log('Setting up ad ticker...');
+        console.log('Setting up ad ticker with persistence...');
         
-        const tickerContainer = document.querySelector('.ticker-container');
-        console.log('Ticker container found:', tickerContainer);
-        
-        let adTicker = document.getElementById('ad-ticker');
-        console.log('Ad ticker element found:', adTicker);
-        
-        if (!adTicker) {
-            console.log('Ad ticker not found, creating it...');
-            // Create the ad ticker element
-            adTicker = document.createElement('div');
+        const createAdTicker = () => {
+            const tickerContainer = document.querySelector('.ticker-container');
+            if (!tickerContainer) {
+                console.error('Ticker container not found!');
+                return null;
+            }
+            
+            // Remove any existing ad ticker first
+            const existingAdTicker = document.getElementById('ad-ticker');
+            if (existingAdTicker) {
+                existingAdTicker.remove();
+                console.log('Removed existing ad ticker');
+            }
+            
+            console.log('Creating new ad ticker...');
+            const adTicker = document.createElement('div');
             adTicker.className = 'ad-ticker';
             adTicker.id = 'ad-ticker';
+            
+            // Force styles that can't be overridden
+            adTicker.style.cssText = `
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                position: static !important;
+                background: rgba(255, 0, 0, 0.8) !important;
+                height: 60px !important;
+                width: 100% !important;
+                overflow: hidden !important;
+                white-space: nowrap !important;
+            `;
             
             // Create ticker content
             const tickerContent = document.createElement('div');
             tickerContent.className = 'ticker-content';
+            tickerContent.style.cssText = `
+                display: inline-block !important;
+                color: #ffd700 !important;
+                animation: scroll-left 120s linear infinite !important;
+                font-size: 16px !important;
+                font-weight: bold !important;
+            `;
+            
             tickerContent.innerHTML = `
-                <span class="ticker-item">🚀 Invest with Robinhood - Commission-free trading</span>
-                <span class="ticker-item">💰 Try Betterment - Automated investing made easy</span>
-                <span class="ticker-item">📈 E*TRADE - Power tools for active traders</span>
-                <span class="ticker-item">🏦 Charles Schwab - Your financial partner</span>
-                <span class="ticker-item">💳 Chase Sapphire - Earn rewards on every purchase</span>
+                <span class="ticker-item" style="color: #ffd700 !important; margin-right: 3rem !important;">🚀 Invest with Robinhood - Commission-free trading</span>
+                <span class="ticker-item" style="color: #ffd700 !important; margin-right: 3rem !important;">💰 Try Betterment - Automated investing made easy</span>
+                <span class="ticker-item" style="color: #ffd700 !important; margin-right: 3rem !important;">📈 E*TRADE - Power tools for active traders</span>
+                <span class="ticker-item" style="color: #ffd700 !important; margin-right: 3rem !important;">🏦 Charles Schwab - Your financial partner</span>
+                <span class="ticker-item" style="color: #ffd700 !important; margin-right: 3rem !important;">💳 Chase Sapphire - Earn rewards on every purchase</span>
             `;
             
             adTicker.appendChild(tickerContent);
+            tickerContainer.appendChild(adTicker);
             
-            // Add to ticker container
-            if (tickerContainer) {
-                tickerContainer.appendChild(adTicker);
-                console.log('Created and added ad ticker to container');
-            } else {
-                console.error('Ticker container not found!');
-                return;
+            console.log('Ad ticker created and added with forced styling');
+            return adTicker;
+        };
+        
+        // Create initially with delay
+        setTimeout(() => {
+            createAdTicker();
+        }, 2000);
+        
+        // Keep recreating if it disappears
+        setInterval(() => {
+            const adTicker = document.getElementById('ad-ticker');
+            if (!adTicker || !adTicker.parentNode) {
+                console.log('Ad ticker missing, recreating...');
+                createAdTicker();
             }
-        }
+        }, 3000);
         
-        // Force visibility regardless
-        adTicker.style.display = 'block';
-        adTicker.style.visibility = 'visible';
-        adTicker.style.opacity = '1';
-        adTicker.style.position = 'static';
-        adTicker.style.background = 'rgba(255, 0, 0, 0.8)';
-        
-        // Check content
-        const tickerContent = adTicker.querySelector('.ticker-content');
-        console.log('Ad ticker content element:', tickerContent);
-        
-        if (tickerContent) {
-            console.log('Ad ticker content innerHTML:', tickerContent.innerHTML);
-            tickerContent.style.display = 'inline-block';
-            tickerContent.style.color = '#ffd700';
-        }
-        
-        console.log('Ad ticker setup complete - element should now be visible');
+        console.log('Ad ticker persistence system activated');
     }
 
     setupInfoHubScroll() {
