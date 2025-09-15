@@ -495,14 +495,14 @@ class HQVSite {
             // Using a free financial API - you can replace with your preferred service
             // For demo, we'll use a fallback to mock data since we need an API key
             const stockData = await this.fetchStockData(stocks);
-            
-            const tickerItems = stockData.map(stock => {
+
+            const tickerItems = this.insertSponsorAds(stockData.map(stock => {
                 const isPositive = stock.change >= 0;
                 const sign = isPositive ? '+' : '';
-                const color = isPositive ? '#00ff88' : '#ff4757';
-                
-                return `<span class="ticker-item" style="color: ${color}">${stock.symbol} $${stock.price.toFixed(2)} ${sign}${stock.change.toFixed(2)} (${sign}${stock.changePercent.toFixed(2)}%)</span>`;
-            });
+                const cssClass = isPositive ? 'ticker-item' : 'ticker-item negative';
+
+                return `<span class="${cssClass}">${stock.symbol} $${stock.price.toFixed(2)} ${sign}${stock.change.toFixed(2)} (${sign}${stock.changePercent.toFixed(2)}%)</span>`;
+            }));
 
             if (tickerContent) {
                 tickerContent.innerHTML = tickerItems.join('');
@@ -587,14 +587,42 @@ class HQVSite {
             const percentChange = (change / basePrice) * 100;
             const isPositive = change >= 0;
             const sign = isPositive ? '+' : '';
-            const color = isPositive ? '#00ff88' : '#ff4757';
+            const cssClass = isPositive ? 'ticker-item' : 'ticker-item negative';
 
-            return `<span class="ticker-item" style="color: ${color}">${symbol} $${basePrice.toFixed(2)} ${sign}${change.toFixed(2)} (${sign}${percentChange.toFixed(2)}%)</span>`;
+            return `<span class="${cssClass}">${symbol} $${basePrice.toFixed(2)} ${sign}${change.toFixed(2)} (${sign}${percentChange.toFixed(2)}%)</span>`;
         });
 
+        const tickerItemsWithAds = this.insertSponsorAds(tickerItems);
+
         if (tickerContent) {
-            tickerContent.innerHTML = tickerItems.join('');
+            tickerContent.innerHTML = tickerItemsWithAds.join('');
         }
+    }
+
+    insertSponsorAds(stockItems) {
+        const sponsorAds = [
+            '🚀 Lockheed Martin - Advancing Defense Technology',
+            '⚡ Raytheon - Innovation in Aerospace & Defense',
+            '🎯 Boeing - Connecting the World Through Aerospace',
+            '🔮 Palantir - Data-Driven Intelligence Solutions',
+            '🛡️ Department of Defense - Protecting Our Nation',
+            '⭐ Northrop Grumman - Defining the Future of Defense',
+            '🚬 Marlboro - The Taste of Freedom',
+            '💨 Juul - Vapor Technology Innovation'
+        ];
+
+        const result = [];
+        stockItems.forEach((item, index) => {
+            result.push(item);
+
+            // Insert sponsor ad after every 10 stocks
+            if ((index + 1) % 10 === 0) {
+                const randomAd = sponsorAds[Math.floor(Math.random() * sponsorAds.length)];
+                result.push(`<span class="ticker-item sponsor-ad">${randomAd}</span>`);
+            }
+        });
+
+        return result;
     }
 
     setupInfohubScrolling() {

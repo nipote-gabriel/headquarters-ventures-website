@@ -1026,29 +1026,72 @@ a:hover {
 }
 
 .stock-ticker {
-    background: rgba(0, 0, 0, 0.85);
+    background: linear-gradient(90deg, #000000 0%, #1a1a1a 50%, #000000 100%);
     color: white;
     height: 60px;
     overflow: hidden;
     white-space: nowrap;
     position: relative;
+    border-top: 3px solid var(--accent-color);
+    border-bottom: 2px solid rgba(255, 210, 0, 0.3);
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(255, 210, 0, 0.1);
+}
+
+.stock-ticker::before {
+    content: "LIVE MARKETS";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 120px;
+    background: linear-gradient(135deg, var(--accent-color), #ffb700);
+    color: #000;
+    font-weight: 900;
+    font-size: 11px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 15;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
 }
 
 .ticker-content {
     display: inline-block;
     animation: scroll-left 180s linear infinite;
     line-height: 60px;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 600;
     white-space: nowrap;
+    padding-left: 130px; /* Account for LIVE MARKETS label */
+    font-family: 'Inter', monospace;
 }
 
 .ticker-item {
-    margin-right: 3rem;
+    margin-right: 4rem;
+    padding: 0 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    transition: all 0.3s ease;
 }
 
 .stock-ticker .ticker-item {
     color: #00ff88;
+    text-shadow: 0 1px 2px rgba(0, 255, 136, 0.3);
+}
+
+.ticker-item.negative {
+    color: #ff4757;
+    text-shadow: 0 1px 2px rgba(255, 71, 87, 0.3);
+}
+
+.ticker-item.sponsor-ad {
+    background: linear-gradient(90deg, rgba(255, 210, 0, 0.2), rgba(255, 210, 0, 0.1));
+    color: var(--accent-color);
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 210, 0, 0.3);
 }
 
 
@@ -1058,6 +1101,42 @@ a:hover {
     }
     100% {
         transform: translate3d(-100%, 0, 0);
+    }
+}
+
+/* Animated HQ Icon */
+.hq-icon-corner {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.hq-animated-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-color), #ffb700);
+    padding: 8px;
+    box-shadow: 0 4px 15px rgba(255, 210, 0, 0.4);
+    animation: hq-pulse 3s ease-in-out infinite;
+    transition: all 0.3s ease;
+}
+
+.hq-animated-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(255, 210, 0, 0.6);
+}
+
+@keyframes hq-pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(255, 210, 0, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 6px 25px rgba(255, 210, 0, 0.6);
     }
 }
 
