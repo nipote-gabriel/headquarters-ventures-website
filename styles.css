@@ -1290,8 +1290,8 @@ a:hover {
 
 .sponsors-track {
     display: flex;
-    width: calc(200px * 8); /* 200px per slide, 4 sponsors duplicated */
-    animation: scroll-sponsors 25s linear infinite;
+    width: calc(200px * 16); /* 200px per slide, 8 sponsors duplicated */
+    animation: scroll-sponsors 40s linear infinite;
 }
 
 .sponsor-slide {
@@ -1334,7 +1334,7 @@ a:hover {
         transform: translateX(0);
     }
     100% {
-        transform: translateX(calc(-200px * 4)); /* scroll by the width of the original 4 sponsors */
+        transform: translateX(calc(-200px * 8)); /* scroll by the width of the original 8 sponsors */
     }
 }
 
