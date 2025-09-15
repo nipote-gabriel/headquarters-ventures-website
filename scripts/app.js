@@ -30,6 +30,7 @@ class HQVSite {
             this.setupPortfolioTracker();
             this.setupStockTicker();
             this.setupInfohubScrolling();
+            this.setupSponsorCarousel();
             
         } catch (error) {
             console.error('Error initializing site:', error);
@@ -649,6 +650,22 @@ class HQVSite {
         // Add smooth scroll behavior
         heroVideoContainer.style.scrollBehavior = 'smooth';
         infoColumn.style.scrollBehavior = 'smooth';
+    }
+
+    setupSponsorCarousel() {
+        const sponsorsTrack = document.querySelector('.sponsors-track');
+        if (!sponsorsTrack) return;
+
+        // Ensure smooth animation by pausing and restarting when needed
+        sponsorsTrack.addEventListener('animationiteration', () => {
+            // Reset transform to prevent accumulating transforms
+            sponsorsTrack.style.transform = 'translateX(0)';
+        });
+
+        // Add CSS to ensure smooth animation
+        sponsorsTrack.style.willChange = 'transform';
+        sponsorsTrack.style.backfaceVisibility = 'hidden';
+        sponsorsTrack.style.perspective = '1000px';
     }
 
 }
