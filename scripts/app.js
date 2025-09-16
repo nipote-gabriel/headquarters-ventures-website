@@ -627,29 +627,33 @@ class HQVSite {
     }
 
     setupInfohubScrolling() {
-        // Synchronized scrolling between video and info column
-        const heroVideoContainer = document.querySelector('.hero-video-container');
+        // Synchronized scrolling between page scroll and infohub content
         const infoColumn = document.querySelector('.info-column');
+        if (!infoColumn) return;
 
-        if (!heroVideoContainer || !infoColumn) return;
-
-        // Ensure both containers can scroll together smoothly
         let isScrolling = false;
 
-        function syncScroll(source, target) {
+        // Listen for window scroll events
+        window.addEventListener('scroll', () => {
             if (isScrolling) return;
             isScrolling = true;
 
             requestAnimationFrame(() => {
-                const scrollPercentage = source.scrollTop / (source.scrollHeight - source.clientHeight);
-                target.scrollTop = scrollPercentage * (target.scrollHeight - target.clientHeight);
+                // Calculate scroll percentage of the page
+                const windowScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const windowScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercentage = Math.min(windowScrollTop / windowScrollHeight, 1);
+
+                // Apply the same scroll percentage to the infohub
+                const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
+                infoColumn.scrollTop = scrollPercentage * infoScrollHeight;
+
                 isScrolling = false;
             });
-        }
+        });
 
         // Add smooth scroll behavior
-        heroVideoContainer.style.scrollBehavior = 'smooth';
-        infoColumn.style.scrollBehavior = 'smooth';
+        infoColumn.style.scrollBehavior = 'auto'; // Use auto for responsive scrolling
     }
 
     setupSponsorCarousel() {
