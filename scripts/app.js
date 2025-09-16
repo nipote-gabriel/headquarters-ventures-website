@@ -562,25 +562,24 @@ class HQVSite {
     getMockStockData(symbol) {
         // Realistic base prices for fallback
         const basePrices = {
-            'AAPL': 175, 'MSFT': 410, 'GOOGL': 140, 'AMZN': 180, 'TSLA': 250,
-            'NVDA': 880, 'META': 320, 'NFLX': 450, 'JPM': 145, 'BAC': 35,
-            'V': 260, 'MA': 410, 'JNJ': 160, 'UNH': 520, 'PG': 155,
-            'HD': 330, 'WMT': 165, 'DIS': 95, 'KO': 60, 'PEP': 170,
-            'NKE': 105, 'MCD': 290, 'COST': 720, 'SBUX': 95, 'BA': 210,
-            'CAT': 340, 'XOM': 110, 'CVX': 155, 'SPY': 480, 'QQQ': 390
+            'AAPL': 195, 'MSFT': 430, 'GOOGL': 175, 'AMZN': 185, 'TSLA': 245,
+            'NVDA': 950, 'META': 385, 'NFLX': 485, 'JPM': 165, 'BAC': 38,
+            'V': 285, 'MA': 450, 'JNJ': 165, 'UNH': 565, 'PG': 165,
+            'HD': 385, 'WMT': 175, 'DIS': 115, 'KO': 62, 'PEP': 175,
+            'NKE': 98, 'MCD': 295, 'COST': 785, 'SBUX': 108, 'BA': 185,
+            'CAT': 385, 'XOM': 120, 'CVX': 165, 'SPY': 515, 'QQQ': 435
         };
-        
-        const basePrice = basePrices[symbol] || Math.random() * 300 + 50;
-        const volatility = Math.random() * 0.05 + 0.01; // 1-6% daily volatility
-        const change = (Math.random() - 0.5) * basePrice * volatility;
-        const price = basePrice + change;
+
+        const basePrice = basePrices[symbol] || 100;
+        // Smaller, more realistic daily changes
+        const change = (Math.random() - 0.5) * 6; // -$3 to +$3
         const changePercent = (change / basePrice) * 100;
-        
+
         return {
             symbol,
-            price,
-            change,
-            changePercent
+            price: Number((basePrice + change).toFixed(2)),
+            change: Number(change.toFixed(2)),
+            changePercent: Number(changePercent.toFixed(2))
         };
     }
 
