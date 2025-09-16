@@ -965,37 +965,63 @@ a:hover {
     .hero-video-section {
         height: auto;
     }
-    
+
     .hero-video-layout {
         grid-template-columns: 1fr;
         height: auto;
         gap: var(--spacing-6);
     }
-    
+
     .hero-video-container {
         order: 1;
         height: 60vh;
     }
-    
+
     .info-column {
         order: 2;
         height: auto;
         border-left: none;
         border-top: 1px solid var(--border-color);
     }
-    
+
     .podcast-info {
         text-align: center;
     }
-    
+
     .platform-links {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: var(--spacing-2);
     }
-    
+
     .email-signup {
         flex-direction: column;
+    }
+
+    /* Newsletter section when stacked below video */
+    .newsletter-section-compact .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-2);
+        gap: var(--spacing-2);
+        flex-wrap: nowrap;
+    }
+
+    .newsletter-section-compact h3 {
+        font-size: var(--font-size-sm);
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+    }
+
+    .website-button {
+        font-size: var(--font-size-xs);
+        padding: 4px 8px;
+        flex-shrink: 0;
+        min-width: auto;
     }
 }
 
