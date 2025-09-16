@@ -583,7 +583,7 @@ a:hover {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: calc(100% - 60px); /* Always reserve space for button + gap */
+    max-width: calc(100% - 72px); /* Always reserve space for button + gap */
 }
 
 .newsletter-section-compact .email-signup {
@@ -909,25 +909,26 @@ a:hover {
     }
 
     .newsletter-section-compact h3 {
-        font-size: var(--font-size-sm); /* Even smaller font on mobile to fit */
+        font-size: var(--font-size-xs); /* Smaller font on mobile to fit */
         flex: 1;
         white-space: nowrap; /* Prevent text wrapping */
         overflow: hidden; /* Hide overflow if needed */
         text-overflow: ellipsis; /* Show ... if text is too long */
         min-width: 0; /* Allow flex item to shrink */
-        max-width: calc(100% - 48px); /* Reserve space for 36px button + 12px gap */
+        max-width: calc(100% - 68px); /* Reserve space for button + gap */
     }
 
     .website-button {
-        width: 36px; /* Smaller circular button on mobile */
-        height: 36px;
-        padding: 8px;
+        height: 28px; /* Smaller rectangular button on mobile */
+        padding: 4px 8px;
         flex-shrink: 0; /* Prevent button from shrinking */
+        min-width: 40px;
+        font-size: var(--font-size-xs);
     }
 
     .website-button svg {
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
     }
     
     .newsletter-section-compact .newsletter-description {
@@ -1021,25 +1022,26 @@ a:hover {
     }
 
     .newsletter-section-compact h3 {
-        font-size: var(--font-size-sm);
+        font-size: var(--font-size-xs);
         flex: 1;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         min-width: 0;
-        max-width: calc(100% - 44px); /* Reserve space for 32px button + 12px gap */
+        max-width: calc(100% - 60px); /* Reserve space for button + gap */
     }
 
     .website-button {
-        width: 32px; /* Even smaller on very small screens */
-        height: 32px;
-        padding: 6px;
+        height: 24px; /* Even smaller rectangular button */
+        padding: 2px 6px;
         flex-shrink: 0;
+        min-width: 36px;
+        font-size: 10px;
     }
 
     .website-button svg {
-        width: 14px;
-        height: 14px;
+        width: 12px;
+        height: 12px;
     }
 }
 
@@ -1626,8 +1628,8 @@ section {
     color: #000;
     font-weight: 700;
     font-size: var(--font-size-sm);
-    padding: 12px;
-    border-radius: 50%;
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
     text-decoration: none;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(255, 210, 0, 0.3);
@@ -1635,9 +1637,9 @@ section {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
+    height: 36px;
     flex-shrink: 0;
+    min-width: 48px;
 }
 
 .website-button:hover {
