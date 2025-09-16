@@ -1009,22 +1009,19 @@ a:hover {
     }
 
     .newsletter-section-compact h3 {
-        font-size: var(--font-size-xs); /* Even smaller font */
+        font-size: var(--font-size-sm);
         flex: 1;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         min-width: 0;
-        max-width: calc(100% - 80px); /* Reserve space for button */
     }
 
     .website-button {
         font-size: var(--font-size-xs);
-        padding: 3px 6px; /* Even smaller padding */
+        padding: 4px 8px;
         flex-shrink: 0;
-        width: 70px; /* Fixed width to ensure it fits */
-        text-align: center;
-        white-space: nowrap;
+        min-width: auto;
     }
 }
 
