@@ -1116,10 +1116,14 @@ a:hover {
     }
 
     .stock-ticker::before {
-        left: 50px; /* Increased from 45px to give more room */
-        width: 100px; /* Increased from 80px to fit text properly */
-        font-size: 10px; /* Increased from 9px for better visibility */
-        letter-spacing: 0.8px; /* Increased for better readability */
+        content: "LIVE\AMARKET";
+        left: 50px;
+        width: 80px;
+        font-size: 9px;
+        letter-spacing: 0.5px;
+        white-space: pre-line;
+        line-height: 1.1;
+        text-align: center;
     }
 
     .hq-icon-ticker {
