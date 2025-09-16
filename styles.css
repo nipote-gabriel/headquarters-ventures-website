@@ -1094,6 +1094,43 @@ a:hover {
     border: 1px solid rgba(255, 210, 0, 0.3);
 }
 
+/* Mobile Ticker Optimizations */
+@media (max-width: 768px) {
+    .stock-ticker {
+        height: 40px; /* Reduced from 60px */
+        border-top: 2px solid var(--accent-color); /* Reduced from 3px */
+    }
+
+    .stock-ticker::before {
+        left: 45px; /* Reduced from 60px */
+        width: 80px; /* Reduced from 120px */
+        font-size: 9px; /* Reduced from 11px */
+        letter-spacing: 0.5px; /* Reduced from 1px */
+    }
+
+    .hq-icon-ticker {
+        width: 45px; /* Reduced from 60px */
+    }
+
+    .hq-ticker-icon {
+        width: 28px; /* Reduced from 36px */
+        height: 28px; /* Reduced from 36px */
+        padding: 4px; /* Reduced from 6px */
+    }
+
+    .ticker-content {
+        line-height: 40px; /* Reduced from 60px */
+        font-size: 13px; /* Reduced from 15px */
+        padding-left: 130px; /* Reduced from 190px */
+    }
+
+    .ticker-item {
+        margin-right: 2rem; /* Reduced from 4rem */
+        padding: 0 8px; /* Reduced from 0 12px */
+        font-size: 12px; /* Smaller font on mobile */
+    }
+}
+
 
 @keyframes scroll-left {
     0% {
@@ -1513,6 +1550,28 @@ section {
 
 .view-all:hover {
     background: rgba(255, 210, 0, 0.1);
+}
+
+.website-button {
+    background: linear-gradient(135deg, var(--accent-color), #ffb700);
+    color: #000;
+    font-weight: 700;
+    font-size: var(--font-size-sm);
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 210, 0, 0.3);
+    border: 2px solid transparent;
+}
+
+.website-button:hover {
+    background: linear-gradient(135deg, #ffb700, var(--accent-color));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 210, 0, 0.4);
+    color: #000;
 }
 
 /* Episodes Grid */
