@@ -1118,7 +1118,7 @@ a:hover {
 
 .ticker-content {
     display: inline-block;
-    animation: scroll-left 180s linear infinite;
+    animation: scroll-left 45s linear infinite;
     line-height: 60px;
     font-size: 15px;
     font-weight: 600;
@@ -1185,6 +1185,7 @@ a:hover {
         line-height: 45px; /* Increased to match new height */
         font-size: 13px; /* Keep same */
         padding-left: 155px; /* Increased to account for larger elements */
+        animation: scroll-left 25s linear infinite; /* Much faster on mobile */
     }
 
     .ticker-item {
