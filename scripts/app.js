@@ -650,74 +650,87 @@ class HQVSite {
 
         const videoContainer = document.querySelector('.hero-video-container');
         if (videoContainer) {
-            // Create a transparent overlay over the video
-            const overlay = document.createElement('div');
-            overlay.style.cssText = `
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 10;
-                pointer-events: auto;
-                background: transparent;
-            `;
+            // Only create overlay on desktop - mobile should use normal touch scrolling
+            const isMobile = window.innerWidth <= 768;
 
-            // Make sure the video container is relatively positioned
-            if (getComputedStyle(videoContainer).position === 'static') {
-                videoContainer.style.position = 'relative';
-            }
+            if (!isMobile) {
+                // Create a transparent overlay over the video
+                const overlay = document.createElement('div');
+                overlay.style.cssText = `
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 10;
+                    pointer-events: auto;
+                    background: transparent;
+                `;
 
-            videoContainer.appendChild(overlay);
-            console.log('Video overlay created');
-
-            // Add wheel listener to the overlay
-            overlay.addEventListener('wheel', (event) => {
-                event.preventDefault();
-                console.log('🎯 VIDEO OVERLAY WHEEL EVENT! Delta:', event.deltaY);
-
-                // Check if infohub has scrollable content
-                const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
-                if (infoScrollHeight <= 0) {
-                    console.log('Info column not scrollable');
-                    return;
+                // Make sure the video container is relatively positioned
+                if (getComputedStyle(videoContainer).position === 'static') {
+                    videoContainer.style.position = 'relative';
                 }
 
-                // Scroll the infohub
-                const scrollAmount = event.deltaY;
-                const currentScrollTop = infoColumn.scrollTop;
-                const newScrollTop = Math.max(0, Math.min(currentScrollTop + scrollAmount, infoScrollHeight));
+                videoContainer.appendChild(overlay);
+                console.log('Video overlay created for desktop');
 
-                console.log('Scrolling infohub from video:', {
-                    from: currentScrollTop,
-                    to: newScrollTop,
-                    delta: scrollAmount
-                });
+                // Add wheel listener to the overlay
+                overlay.addEventListener('wheel', (event) => {
+                    event.preventDefault();
+                    console.log('🎯 VIDEO OVERLAY WHEEL EVENT! Delta:', event.deltaY);
 
-                infoColumn.scrollTop = newScrollTop;
-            }, { passive: false });
-        }
+                    // Check if infohub has scrollable content
+                    const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
+                    if (infoScrollHeight <= 0) {
+                        console.log('Info column not scrollable');
+                        return;
+                    }
 
-        // Also keep the document listener for other areas
-        document.addEventListener('wheel', (event) => {
-            const isOverInfohub = infoColumn.contains(event.target);
-            const isOverVideo = videoContainer && videoContainer.contains(event.target);
-
-            console.log('🔥 DOCUMENT WHEEL EVENT! Delta:', event.deltaY, 'Over infohub:', isOverInfohub, 'Over video:', isOverVideo);
-
-            // Only handle if not over infohub (let infohub handle its own scrolling)
-            if (!isOverInfohub && !isOverVideo) {
-                event.preventDefault();
-
-                const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
-                if (infoScrollHeight > 0) {
+                    // Scroll the infohub
                     const scrollAmount = event.deltaY;
                     const currentScrollTop = infoColumn.scrollTop;
                     const newScrollTop = Math.max(0, Math.min(currentScrollTop + scrollAmount, infoScrollHeight));
+
+                    console.log('Scrolling infohub from video:', {
+                        from: currentScrollTop,
+                        to: newScrollTop,
+                        delta: scrollAmount
+                    });
+
                     infoColumn.scrollTop = newScrollTop;
-                }
+                }, { passive: false });
+            } else {
+                console.log('Mobile detected - skipping video overlay, using native touch scrolling');
             }
-        }, { passive: false });
+        }
+
+        // Also keep the document listener for other areas (desktop only)
+        const isMobile = window.innerWidth <= 768;
+
+        if (!isMobile) {
+            document.addEventListener('wheel', (event) => {
+                const isOverInfohub = infoColumn.contains(event.target);
+                const isOverVideo = videoContainer && videoContainer.contains(event.target);
+
+                console.log('🔥 DOCUMENT WHEEL EVENT! Delta:', event.deltaY, 'Over infohub:', isOverInfohub, 'Over video:', isOverVideo);
+
+                // Only handle if not over infohub (let infohub handle its own scrolling)
+                if (!isOverInfohub && !isOverVideo) {
+                    event.preventDefault();
+
+                    const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
+                    if (infoScrollHeight > 0) {
+                        const scrollAmount = event.deltaY;
+                        const currentScrollTop = infoColumn.scrollTop;
+                        const newScrollTop = Math.max(0, Math.min(currentScrollTop + scrollAmount, infoScrollHeight));
+                        infoColumn.scrollTop = newScrollTop;
+                    }
+                }
+            }, { passive: false });
+        } else {
+            console.log('Mobile - skipping document wheel listener, using native touch scrolling');
+        }
 
         console.log('Wheel event listeners added!');
 
