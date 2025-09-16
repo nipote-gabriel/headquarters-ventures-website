@@ -627,7 +627,7 @@ class HQVSite {
     }
 
     setupInfohubScrolling() {
-        // Synchronized scrolling between page scroll and infohub content
+        // Synchronized scrolling - infohub scrolls when user scrolls anywhere on page
         const infoColumn = document.querySelector('.info-column');
         if (!infoColumn) {
             console.log('Info column not found for scroll sync');
@@ -637,43 +637,48 @@ class HQVSite {
         console.log('Setting up infohub scroll sync');
         let isScrolling = false;
 
-        // Listen for window scroll events
-        window.addEventListener('scroll', () => {
+        // Listen for wheel events anywhere on the page
+        document.addEventListener('wheel', (event) => {
+            // Prevent default scrolling if we're not over the infohub
+            const target = event.target;
+            const isOverInfohub = infoColumn.contains(target);
+
+            if (!isOverInfohub) {
+                event.preventDefault();
+            }
+
             if (isScrolling) return;
             isScrolling = true;
 
             requestAnimationFrame(() => {
-                // Calculate scroll percentage of the page
-                const windowScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                const windowScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+                // Check if infohub has scrollable content
+                const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
 
-                if (windowScrollHeight <= 0) {
-                    console.log('Page not scrollable - windowScrollHeight:', windowScrollHeight);
+                if (infoScrollHeight <= 0) {
+                    console.log('Info column not scrollable - infoScrollHeight:', infoScrollHeight);
                     isScrolling = false;
                     return;
                 }
 
-                const scrollPercentage = Math.min(windowScrollTop / windowScrollHeight, 1);
+                // Calculate scroll amount based on wheel delta
+                const scrollAmount = event.deltaY * 2; // Multiply for faster scrolling
+                const currentScrollTop = infoColumn.scrollTop;
+                const newScrollTop = Math.max(0, Math.min(currentScrollTop + scrollAmount, infoScrollHeight));
 
-                // Apply the same scroll percentage to the infohub
-                const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
+                infoColumn.scrollTop = newScrollTop;
 
-                if (infoScrollHeight > 0) {
-                    infoColumn.scrollTop = scrollPercentage * infoScrollHeight;
-                    console.log('Scroll sync:', {
-                        windowScrollTop,
-                        windowScrollHeight,
-                        scrollPercentage,
-                        infoScrollHeight,
-                        newInfoScrollTop: infoColumn.scrollTop
-                    });
-                } else {
-                    console.log('Info column not scrollable - infoScrollHeight:', infoScrollHeight);
-                }
+                console.log('Wheel scroll:', {
+                    deltaY: event.deltaY,
+                    scrollAmount,
+                    currentScrollTop,
+                    newScrollTop,
+                    infoScrollHeight,
+                    isOverInfohub
+                });
 
                 isScrolling = false;
             });
-        });
+        }, { passive: false });
 
         // Add smooth scroll behavior
         infoColumn.style.scrollBehavior = 'auto';
