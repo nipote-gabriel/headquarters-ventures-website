@@ -568,12 +568,16 @@ a:hover {
 }
 
 .newsletter-section-compact .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: var(--spacing-2);
 }
 
 .newsletter-section-compact h3 {
     margin-bottom: 0;
     font-size: var(--font-size-lg);
+    flex: 1; /* Allow title to take available space */
 }
 
 .newsletter-section-compact .email-signup {
@@ -890,11 +894,21 @@ a:hover {
     }
     
     .newsletter-section-compact .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         margin-bottom: var(--spacing-2);
+        gap: var(--spacing-2); /* Add some gap between title and button */
     }
-    
+
     .newsletter-section-compact h3 {
         font-size: var(--font-size-lg);
+        flex: 1;
+    }
+
+    .website-button {
+        font-size: var(--font-size-xs); /* Smaller button on mobile */
+        padding: 6px 12px; /* Reduced padding on mobile */
     }
     
     .newsletter-section-compact .newsletter-description {
@@ -1097,37 +1111,37 @@ a:hover {
 /* Mobile Ticker Optimizations */
 @media (max-width: 768px) {
     .stock-ticker {
-        height: 40px; /* Reduced from 60px */
+        height: 45px; /* Increased from 40px to prevent text cutoff */
         border-top: 2px solid var(--accent-color); /* Reduced from 3px */
     }
 
     .stock-ticker::before {
-        left: 45px; /* Reduced from 60px */
-        width: 80px; /* Reduced from 120px */
-        font-size: 9px; /* Reduced from 11px */
-        letter-spacing: 0.5px; /* Reduced from 1px */
+        left: 50px; /* Increased from 45px to give more room */
+        width: 100px; /* Increased from 80px to fit text properly */
+        font-size: 10px; /* Increased from 9px for better visibility */
+        letter-spacing: 0.8px; /* Increased for better readability */
     }
 
     .hq-icon-ticker {
-        width: 45px; /* Reduced from 60px */
+        width: 50px; /* Increased from 45px */
     }
 
     .hq-ticker-icon {
-        width: 28px; /* Reduced from 36px */
-        height: 28px; /* Reduced from 36px */
-        padding: 4px; /* Reduced from 6px */
+        width: 30px; /* Increased from 28px */
+        height: 30px; /* Increased from 28px */
+        padding: 5px; /* Increased from 4px */
     }
 
     .ticker-content {
-        line-height: 40px; /* Reduced from 60px */
-        font-size: 13px; /* Reduced from 15px */
-        padding-left: 130px; /* Reduced from 190px */
+        line-height: 45px; /* Increased to match new height */
+        font-size: 13px; /* Keep same */
+        padding-left: 155px; /* Increased to account for larger elements */
     }
 
     .ticker-item {
-        margin-right: 2rem; /* Reduced from 4rem */
-        padding: 0 8px; /* Reduced from 0 12px */
-        font-size: 12px; /* Smaller font on mobile */
+        margin-right: 2rem; /* Keep same */
+        padding: 0 8px; /* Keep same */
+        font-size: 12px; /* Keep same */
     }
 }
 
