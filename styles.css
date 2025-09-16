@@ -572,12 +572,18 @@ a:hover {
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--spacing-2);
+    gap: var(--spacing-3); /* Ensure consistent spacing between text and button */
 }
 
 .newsletter-section-compact h3 {
     margin-bottom: 0;
     font-size: var(--font-size-lg);
     flex: 1; /* Allow title to take available space */
+    min-width: 0; /* Allow text to shrink if needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: calc(100% - 60px); /* Always reserve space for button + gap */
 }
 
 .newsletter-section-compact .email-signup {
@@ -909,6 +915,7 @@ a:hover {
         overflow: hidden; /* Hide overflow if needed */
         text-overflow: ellipsis; /* Show ... if text is too long */
         min-width: 0; /* Allow flex item to shrink */
+        max-width: calc(100% - 48px); /* Reserve space for 36px button + 12px gap */
     }
 
     .website-button {
@@ -1020,6 +1027,7 @@ a:hover {
         overflow: hidden;
         text-overflow: ellipsis;
         min-width: 0;
+        max-width: calc(100% - 44px); /* Reserve space for 32px button + 12px gap */
     }
 
     .website-button {
