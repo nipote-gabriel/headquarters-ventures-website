@@ -516,45 +516,56 @@ class HQVSite {
     }
 
     async fetchStockData(symbols) {
-        // IMPORTANT: Replace with your own Finnhub API key. 
-        // For security, it's recommended to use a backend proxy to hide your API key.
-        const API_KEY = 'YOUR_FINNHUB_API_KEY';
-        const stockData = [];
-        
-        // Check if we should use mock data (when no real API key is configured)
-        const USE_MOCK_DATA = API_KEY === 'YOUR_FINNHUB_API_KEY';
-
-        if (USE_MOCK_DATA) {
-            // Return realistic mock data without API calls to avoid errors
-            return symbols.map(symbol => this.getMockStockData(symbol));
-        }
+        // Real Finnhub API key - will fallback to mock data if out of tokens or API fails
+        const API_KEY = 'd31lo2pr01qsprr1j1pgd31lo2pr01qsprr1j1q0';
 
         try {
-            // Real API calls (when API key is configured)
             const promises = symbols.map(async (symbol) => {
                 try {
                     const response = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`);
+
+                    // Handle API rate limit or quota exceeded
+                    if (response.status === 429) {
+                        console.warn('Finnhub API rate limit reached, using mock data');
+                        return this.getMockStockData(symbol);
+                    }
+
+                    // Handle quota exceeded or other API limits
+                    if (response.status === 403) {
+                        console.warn('Finnhub API quota exceeded, using mock data');
+                        return this.getMockStockData(symbol);
+                    }
+
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
+
                     const data = await response.json();
 
-                    return {
-                        symbol,
-                        price: data.c || 0,
-                        change: data.d || 0,
-                        changePercent: data.dp || 0
-                    };
+                    // Check if API returned valid data
+                    if (data.c && data.c > 0) {
+                        return {
+                            symbol,
+                            price: Number(data.c.toFixed(2)),
+                            change: Number((data.d || 0).toFixed(2)),
+                            changePercent: Number((data.dp || 0).toFixed(2))
+                        };
+                    } else {
+                        // API returned empty/invalid data, use mock
+                        console.warn(`Invalid data for ${symbol}, using mock data`);
+                        return this.getMockStockData(symbol);
+                    }
                 } catch (error) {
-                    // Silent fallback to mock data for failed requests
+                    // Network error or other issue, silently fallback to mock data
+                    console.warn(`Error fetching ${symbol}, using mock data:`, error.message);
                     return this.getMockStockData(symbol);
                 }
             });
 
             return Promise.all(promises);
-
         } catch (error) {
-            // Return mock data as fallback
+            // Fallback to all mock data if there's a general error
+            console.warn('General API error, using all mock data:', error.message);
             return symbols.map(symbol => this.getMockStockData(symbol));
         }
     }
