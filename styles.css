@@ -898,24 +898,27 @@ a:hover {
         justify-content: space-between;
         align-items: center;
         margin-bottom: var(--spacing-2);
-        gap: var(--spacing-2); /* Add some gap between title and button */
+        gap: var(--spacing-1); /* Smaller gap to save space */
         flex-wrap: nowrap; /* Prevent wrapping to new line */
     }
 
     .newsletter-section-compact h3 {
-        font-size: var(--font-size-sm); /* Even smaller font on mobile to fit */
+        font-size: var(--font-size-xs); /* Even smaller font on mobile to fit */
         flex: 1;
         white-space: nowrap; /* Prevent text wrapping */
         overflow: hidden; /* Hide overflow if needed */
         text-overflow: ellipsis; /* Show ... if text is too long */
         min-width: 0; /* Allow flex item to shrink */
+        max-width: calc(100% - 80px); /* Reserve space for button */
     }
 
     .website-button {
         font-size: var(--font-size-xs); /* Smaller button on mobile */
-        padding: 4px 8px; /* Even smaller padding on mobile */
+        padding: 3px 6px; /* Even smaller padding on mobile */
         flex-shrink: 0; /* Prevent button from shrinking */
-        min-width: auto; /* Allow button to be as small as needed */
+        width: 70px; /* Fixed width to ensure it fits */
+        text-align: center;
+        white-space: nowrap;
     }
     
     .newsletter-section-compact .newsletter-description {
