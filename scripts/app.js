@@ -627,55 +627,37 @@ class HQVSite {
     }
 
     setupInfohubScrolling() {
+        console.log('setupInfohubScrolling function called!');
+
         // Synchronized scrolling - infohub scrolls when user scrolls anywhere on page
         const infoColumn = document.querySelector('.info-column');
         if (!infoColumn) {
-            console.log('Info column not found for scroll sync');
+            console.error('ERROR: Info column not found for scroll sync');
             return;
         }
 
-        console.log('Setting up infohub scroll sync');
+        console.log('SUCCESS: Info column found');
+        console.log('Info column element:', infoColumn);
         console.log('Info column dimensions:', {
             scrollHeight: infoColumn.scrollHeight,
             clientHeight: infoColumn.clientHeight,
             scrollableHeight: infoColumn.scrollHeight - infoColumn.clientHeight
         });
 
-        // Listen for wheel events anywhere on the page
+        // Add a simple test first
+        console.log('Adding wheel event listener...');
+
+        // Test wheel events work at all
         document.addEventListener('wheel', (event) => {
-            console.log('Wheel event detected:', event.deltaY);
-
-            // Check if we're scrolling over the infohub itself
-            const isOverInfohub = infoColumn.contains(event.target);
-            console.log('Is over infohub:', isOverInfohub);
-
-            // Only intercept if we're NOT over the infohub
-            if (!isOverInfohub) {
-                event.preventDefault();
-
-                // Check if infohub has scrollable content
-                const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
-                console.log('Infohub scrollable height:', infoScrollHeight);
-
-                if (infoScrollHeight <= 0) {
-                    console.log('Info column not scrollable');
-                    return;
-                }
-
-                // Calculate scroll amount based on wheel delta
-                const scrollAmount = event.deltaY;
-                const currentScrollTop = infoColumn.scrollTop;
-                const newScrollTop = Math.max(0, Math.min(currentScrollTop + scrollAmount, infoScrollHeight));
-
-                console.log('Scrolling infohub:', {
-                    from: currentScrollTop,
-                    to: newScrollTop,
-                    delta: scrollAmount
-                });
-
-                infoColumn.scrollTop = newScrollTop;
-            }
+            console.log('🔥 WHEEL EVENT FIRED! Delta:', event.deltaY, 'Target:', event.target.tagName);
         }, { passive: false });
+
+        // Also try adding to window
+        window.addEventListener('wheel', (event) => {
+            console.log('🌟 WINDOW WHEEL EVENT! Delta:', event.deltaY);
+        }, { passive: false });
+
+        console.log('Wheel event listeners added!');
 
         // Remove smooth scroll behavior for immediate response
         infoColumn.style.scrollBehavior = 'auto';
