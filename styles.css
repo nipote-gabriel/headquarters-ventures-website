@@ -568,22 +568,20 @@ a:hover {
 }
 
 .newsletter-section-compact .section-header {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto;
     align-items: center;
     margin-bottom: var(--spacing-2);
-    gap: var(--spacing-3); /* Ensure consistent spacing between text and button */
+    gap: var(--spacing-2); /* Smaller gap to ensure more space for text */
 }
 
 .newsletter-section-compact h3 {
     margin-bottom: 0;
     font-size: var(--font-size-lg);
-    flex: 1; /* Allow title to take available space */
     min-width: 0; /* Allow text to shrink if needed */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: calc(100% - 72px); /* Always reserve space for button + gap */
 }
 
 .newsletter-section-compact .email-signup {
@@ -900,22 +898,19 @@ a:hover {
     }
     
     .newsletter-section-compact .section-header {
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: 1fr auto;
         align-items: center;
         margin-bottom: var(--spacing-2);
-        gap: var(--spacing-2); /* Add some gap between title and button */
-        flex-wrap: nowrap; /* Prevent wrapping to new line */
+        gap: var(--spacing-1); /* Minimal gap for maximum space */
     }
 
     .newsletter-section-compact h3 {
         font-size: var(--font-size-xs); /* Smaller font on mobile to fit */
-        flex: 1;
         white-space: nowrap; /* Prevent text wrapping */
         overflow: hidden; /* Hide overflow if needed */
         text-overflow: ellipsis; /* Show ... if text is too long */
-        min-width: 0; /* Allow flex item to shrink */
-        max-width: calc(100% - 68px); /* Reserve space for button + gap */
+        min-width: 0; /* Allow grid item to shrink */
     }
 
     .website-button {
@@ -1013,22 +1008,19 @@ a:hover {
 
     /* Newsletter section when stacked below video */
     .newsletter-section-compact .section-header {
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: 1fr auto;
         align-items: center;
         margin-bottom: var(--spacing-2);
-        gap: var(--spacing-2);
-        flex-wrap: nowrap;
+        gap: var(--spacing-1);
     }
 
     .newsletter-section-compact h3 {
         font-size: var(--font-size-xs);
-        flex: 1;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         min-width: 0;
-        max-width: calc(100% - 60px); /* Reserve space for button + gap */
     }
 
     .website-button {
