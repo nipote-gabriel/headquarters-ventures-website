@@ -521,36 +521,39 @@ class HQVSite {
         const API_KEY = 'YOUR_FINNHUB_API_KEY';
         const stockData = [];
         
+        // Check if we should use mock data (when no real API key is configured)
+        const USE_MOCK_DATA = API_KEY === 'YOUR_FINNHUB_API_KEY';
+
+        if (USE_MOCK_DATA) {
+            // Return realistic mock data without API calls to avoid errors
+            return symbols.map(symbol => this.getMockStockData(symbol));
+        }
+
         try {
-            // Fetch real data from Finnhub API
+            // Real API calls (when API key is configured)
             const promises = symbols.map(async (symbol) => {
                 try {
                     const response = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`);
-                    const data = await response.json();
-                    
-                    // Finnhub returns: c (current price), d (change), dp (percent change)
-                    if (data.c && data.c > 0) {
-                        return {
-                            symbol,
-                            price: data.c,
-                            change: data.d || 0,
-                            changePercent: data.dp || 0
-                        };
-                    } else {
-                        // Fallback if API returns invalid data
-                        return this.getMockStockData(symbol);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
                     }
+                    const data = await response.json();
+
+                    return {
+                        symbol,
+                        price: data.c || 0,
+                        change: data.d || 0,
+                        changePercent: data.dp || 0
+                    };
                 } catch (error) {
-                    console.warn(`Error fetching ${symbol}:`, error);
+                    // Silent fallback to mock data for failed requests
                     return this.getMockStockData(symbol);
                 }
             });
-            
-            const results = await Promise.all(promises);
-            return results.filter(Boolean); // Remove any null results
-            
+
+            return Promise.all(promises);
+
         } catch (error) {
-            console.error('Error fetching stock data:', error);
             // Return mock data as fallback
             return symbols.map(symbol => this.getMockStockData(symbol));
         }
