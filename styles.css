@@ -1116,7 +1116,7 @@ a:hover {
     }
 
     .stock-ticker::before {
-        content: "LIVE\AMARKET";
+        content: "LIVE\AMARKETS";
         left: 50px;
         width: 80px;
         font-size: 9px;
