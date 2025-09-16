@@ -648,6 +648,7 @@ class HQVSite {
                 const windowScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
 
                 if (windowScrollHeight <= 0) {
+                    console.log('Page not scrollable - windowScrollHeight:', windowScrollHeight);
                     isScrolling = false;
                     return;
                 }
@@ -659,6 +660,15 @@ class HQVSite {
 
                 if (infoScrollHeight > 0) {
                     infoColumn.scrollTop = scrollPercentage * infoScrollHeight;
+                    console.log('Scroll sync:', {
+                        windowScrollTop,
+                        windowScrollHeight,
+                        scrollPercentage,
+                        infoScrollHeight,
+                        newInfoScrollTop: infoColumn.scrollTop
+                    });
+                } else {
+                    console.log('Info column not scrollable - infoScrollHeight:', infoScrollHeight);
                 }
 
                 isScrolling = false;
