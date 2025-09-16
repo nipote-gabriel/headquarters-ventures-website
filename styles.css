@@ -912,10 +912,15 @@ a:hover {
     }
 
     .website-button {
-        font-size: var(--font-size-xs); /* Smaller button on mobile */
-        padding: 4px 8px; /* Even smaller padding on mobile */
+        width: 36px; /* Smaller circular button on mobile */
+        height: 36px;
+        padding: 8px;
         flex-shrink: 0; /* Prevent button from shrinking */
-        min-width: auto; /* Allow button to be as small as needed */
+    }
+
+    .website-button svg {
+        width: 16px;
+        height: 16px;
     }
     
     .newsletter-section-compact .newsletter-description {
@@ -1018,10 +1023,15 @@ a:hover {
     }
 
     .website-button {
-        font-size: var(--font-size-xs);
-        padding: 4px 8px;
+        width: 32px; /* Even smaller on very small screens */
+        height: 32px;
+        padding: 6px;
         flex-shrink: 0;
-        min-width: auto;
+    }
+
+    .website-button svg {
+        width: 14px;
+        height: 14px;
     }
 }
 
@@ -1608,14 +1618,18 @@ section {
     color: #000;
     font-weight: 700;
     font-size: var(--font-size-sm);
-    padding: 8px 16px;
-    border-radius: 20px;
+    padding: 12px;
+    border-radius: 50%;
     text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 1px;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(255, 210, 0, 0.3);
     border: 2px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
 }
 
 .website-button:hover {
