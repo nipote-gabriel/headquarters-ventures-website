@@ -1514,7 +1514,7 @@ a:hover {
         transform: translateX(0);
     }
     100% {
-        transform: translateX(calc(-200px * 8)); /* Move by exactly 8 sponsors width */
+        transform: translateX(calc(-200px * 14)); /* Move by exactly 14 sponsors width */
     }
 }
 
