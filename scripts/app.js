@@ -644,17 +644,79 @@ class HQVSite {
             scrollableHeight: infoColumn.scrollHeight - infoColumn.clientHeight
         });
 
-        // Add a simple test first
-        console.log('Adding wheel event listener...');
+        // The issue: YouTube iframe blocks wheel events from bubbling up
+        // Solution: Add a transparent overlay over the video area to capture wheel events
+        console.log('Adding wheel event listener and iframe overlay...');
 
-        // Test wheel events work at all
+        const videoContainer = document.querySelector('.hero-video-container');
+        if (videoContainer) {
+            // Create a transparent overlay over the video
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 10;
+                pointer-events: auto;
+                background: transparent;
+            `;
+
+            // Make sure the video container is relatively positioned
+            if (getComputedStyle(videoContainer).position === 'static') {
+                videoContainer.style.position = 'relative';
+            }
+
+            videoContainer.appendChild(overlay);
+            console.log('Video overlay created');
+
+            // Add wheel listener to the overlay
+            overlay.addEventListener('wheel', (event) => {
+                event.preventDefault();
+                console.log('🎯 VIDEO OVERLAY WHEEL EVENT! Delta:', event.deltaY);
+
+                // Check if infohub has scrollable content
+                const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
+                if (infoScrollHeight <= 0) {
+                    console.log('Info column not scrollable');
+                    return;
+                }
+
+                // Scroll the infohub
+                const scrollAmount = event.deltaY;
+                const currentScrollTop = infoColumn.scrollTop;
+                const newScrollTop = Math.max(0, Math.min(currentScrollTop + scrollAmount, infoScrollHeight));
+
+                console.log('Scrolling infohub from video:', {
+                    from: currentScrollTop,
+                    to: newScrollTop,
+                    delta: scrollAmount
+                });
+
+                infoColumn.scrollTop = newScrollTop;
+            }, { passive: false });
+        }
+
+        // Also keep the document listener for other areas
         document.addEventListener('wheel', (event) => {
-            console.log('🔥 WHEEL EVENT FIRED! Delta:', event.deltaY, 'Target:', event.target.tagName);
-        }, { passive: false });
+            const isOverInfohub = infoColumn.contains(event.target);
+            const isOverVideo = videoContainer && videoContainer.contains(event.target);
 
-        // Also try adding to window
-        window.addEventListener('wheel', (event) => {
-            console.log('🌟 WINDOW WHEEL EVENT! Delta:', event.deltaY);
+            console.log('🔥 DOCUMENT WHEEL EVENT! Delta:', event.deltaY, 'Over infohub:', isOverInfohub, 'Over video:', isOverVideo);
+
+            // Only handle if not over infohub (let infohub handle its own scrolling)
+            if (!isOverInfohub && !isOverVideo) {
+                event.preventDefault();
+
+                const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
+                if (infoScrollHeight > 0) {
+                    const scrollAmount = event.deltaY;
+                    const currentScrollTop = infoColumn.scrollTop;
+                    const newScrollTop = Math.max(0, Math.min(currentScrollTop + scrollAmount, infoScrollHeight));
+                    infoColumn.scrollTop = newScrollTop;
+                }
+            }
         }, { passive: false });
 
         console.log('Wheel event listeners added!');
