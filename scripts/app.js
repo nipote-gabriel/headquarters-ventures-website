@@ -649,13 +649,20 @@ class HQVSite {
         console.log('Adding wheel event listener and iframe overlay...');
 
         const videoContainer = document.querySelector('.hero-video-container');
-        if (videoContainer) {
-            // Only create overlay on desktop - mobile should use normal touch scrolling
-            const isMobile = window.innerWidth <= 768;
+        let overlay = null;
+        let wheelEventListeners = [];
 
-            if (!isMobile) {
+        if (videoContainer) {
+            // Make sure the video container is relatively positioned
+            if (getComputedStyle(videoContainer).position === 'static') {
+                videoContainer.style.position = 'relative';
+            }
+
+            function createOverlay() {
+                if (overlay) return; // Already exists
+
                 // Create a transparent overlay over the video
-                const overlay = document.createElement('div');
+                overlay = document.createElement('div');
                 overlay.style.cssText = `
                     position: absolute;
                     top: 0;
@@ -666,17 +673,13 @@ class HQVSite {
                     pointer-events: auto;
                     background: transparent;
                 `;
-
-                // Make sure the video container is relatively positioned
-                if (getComputedStyle(videoContainer).position === 'static') {
-                    videoContainer.style.position = 'relative';
-                }
+                overlay.className = 'video-scroll-overlay';
 
                 videoContainer.appendChild(overlay);
                 console.log('Video overlay created for desktop');
 
                 // Add wheel listener to the overlay
-                overlay.addEventListener('wheel', (event) => {
+                const wheelHandler = (event) => {
                     event.preventDefault();
                     console.log('🎯 VIDEO OVERLAY WHEEL EVENT! Delta:', event.deltaY);
 
@@ -699,17 +702,44 @@ class HQVSite {
                     });
 
                     infoColumn.scrollTop = newScrollTop;
-                }, { passive: false });
-            } else {
-                console.log('Mobile detected - skipping video overlay, using native touch scrolling');
+                };
+
+                overlay.addEventListener('wheel', wheelHandler, { passive: false });
+                wheelEventListeners.push({ element: overlay, handler: wheelHandler });
             }
+
+            function removeOverlay() {
+                if (overlay) {
+                    overlay.remove();
+                    overlay = null;
+                    console.log('Video overlay removed for mobile');
+                }
+            }
+
+            function updateOverlayVisibility() {
+                const isMobile = window.innerWidth <= 768;
+
+                if (isMobile) {
+                    removeOverlay();
+                } else {
+                    createOverlay();
+                }
+            }
+
+            // Initial setup
+            updateOverlayVisibility();
+
+            // Listen for window resize to toggle overlay
+            window.addEventListener('resize', updateOverlayVisibility);
         }
 
-        // Also keep the document listener for other areas (desktop only)
-        const isMobile = window.innerWidth <= 768;
+        // Document wheel listener - also needs to be responsive
+        let documentWheelHandler = null;
 
-        if (!isMobile) {
-            document.addEventListener('wheel', (event) => {
+        function addDocumentWheelListener() {
+            if (documentWheelHandler) return; // Already added
+
+            documentWheelHandler = (event) => {
                 const isOverInfohub = infoColumn.contains(event.target);
                 const isOverVideo = videoContainer && videoContainer.contains(event.target);
 
@@ -727,10 +757,35 @@ class HQVSite {
                         infoColumn.scrollTop = newScrollTop;
                     }
                 }
-            }, { passive: false });
-        } else {
-            console.log('Mobile - skipping document wheel listener, using native touch scrolling');
+            };
+
+            document.addEventListener('wheel', documentWheelHandler, { passive: false });
+            console.log('Document wheel listener added for desktop');
         }
+
+        function removeDocumentWheelListener() {
+            if (documentWheelHandler) {
+                document.removeEventListener('wheel', documentWheelHandler);
+                documentWheelHandler = null;
+                console.log('Document wheel listener removed for mobile');
+            }
+        }
+
+        function updateDocumentWheelListener() {
+            const isMobile = window.innerWidth <= 768;
+
+            if (isMobile) {
+                removeDocumentWheelListener();
+            } else {
+                addDocumentWheelListener();
+            }
+        }
+
+        // Initial setup
+        updateDocumentWheelListener();
+
+        // Listen for window resize to toggle document wheel listener
+        window.addEventListener('resize', updateDocumentWheelListener);
 
         console.log('Wheel event listeners added!');
 
