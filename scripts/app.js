@@ -627,26 +627,9 @@ class HQVSite {
     }
 
     setupInfohubScrolling() {
-        console.log('setupInfohubScrolling function called!');
-
         // Synchronized scrolling - infohub scrolls when user scrolls anywhere on page
         const infoColumn = document.querySelector('.info-column');
-        if (!infoColumn) {
-            console.error('ERROR: Info column not found for scroll sync');
-            return;
-        }
-
-        console.log('SUCCESS: Info column found');
-        console.log('Info column element:', infoColumn);
-        console.log('Info column dimensions:', {
-            scrollHeight: infoColumn.scrollHeight,
-            clientHeight: infoColumn.clientHeight,
-            scrollableHeight: infoColumn.scrollHeight - infoColumn.clientHeight
-        });
-
-        // The issue: YouTube iframe blocks wheel events from bubbling up
-        // Solution: Add a transparent overlay over the video area to capture wheel events
-        console.log('Adding wheel event listener and iframe overlay...');
+        if (!infoColumn) return;
 
         const videoContainer = document.querySelector('.hero-video-container');
         let overlay = null;
@@ -676,30 +659,19 @@ class HQVSite {
                 overlay.className = 'video-scroll-overlay';
 
                 videoContainer.appendChild(overlay);
-                console.log('Video overlay created for desktop');
 
                 // Add wheel listener to the overlay
                 const wheelHandler = (event) => {
                     event.preventDefault();
-                    console.log('🎯 VIDEO OVERLAY WHEEL EVENT! Delta:', event.deltaY);
 
                     // Check if infohub has scrollable content
                     const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
-                    if (infoScrollHeight <= 0) {
-                        console.log('Info column not scrollable');
-                        return;
-                    }
+                    if (infoScrollHeight <= 0) return;
 
                     // Scroll the infohub
                     const scrollAmount = event.deltaY;
                     const currentScrollTop = infoColumn.scrollTop;
                     const newScrollTop = Math.max(0, Math.min(currentScrollTop + scrollAmount, infoScrollHeight));
-
-                    console.log('Scrolling infohub from video:', {
-                        from: currentScrollTop,
-                        to: newScrollTop,
-                        delta: scrollAmount
-                    });
 
                     infoColumn.scrollTop = newScrollTop;
                 };
@@ -712,7 +684,6 @@ class HQVSite {
                 if (overlay) {
                     overlay.remove();
                     overlay = null;
-                    console.log('Video overlay removed for mobile');
                 }
             }
 
@@ -743,8 +714,6 @@ class HQVSite {
                 const isOverInfohub = infoColumn.contains(event.target);
                 const isOverVideo = videoContainer && videoContainer.contains(event.target);
 
-                console.log('🔥 DOCUMENT WHEEL EVENT! Delta:', event.deltaY, 'Over infohub:', isOverInfohub, 'Over video:', isOverVideo);
-
                 // Only handle if not over infohub (let infohub handle its own scrolling)
                 if (!isOverInfohub && !isOverVideo) {
                     event.preventDefault();
@@ -760,14 +729,12 @@ class HQVSite {
             };
 
             document.addEventListener('wheel', documentWheelHandler, { passive: false });
-            console.log('Document wheel listener added for desktop');
         }
 
         function removeDocumentWheelListener() {
             if (documentWheelHandler) {
                 document.removeEventListener('wheel', documentWheelHandler);
                 documentWheelHandler = null;
-                console.log('Document wheel listener removed for mobile');
             }
         }
 
@@ -787,11 +754,8 @@ class HQVSite {
         // Listen for window resize to toggle document wheel listener
         window.addEventListener('resize', updateDocumentWheelListener);
 
-        console.log('Wheel event listeners added!');
-
         // Remove smooth scroll behavior for immediate response
         infoColumn.style.scrollBehavior = 'auto';
-        console.log('Infohub scroll sync setup complete');
     }
 
     setupSponsorCarousel() {

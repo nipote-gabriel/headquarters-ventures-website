@@ -899,11 +899,15 @@ a:hover {
         align-items: center;
         margin-bottom: var(--spacing-2);
         gap: var(--spacing-2); /* Add some gap between title and button */
+        flex-wrap: nowrap; /* Prevent wrapping to new line */
     }
 
     .newsletter-section-compact h3 {
-        font-size: var(--font-size-lg);
+        font-size: var(--font-size-base); /* Smaller font on mobile to fit */
         flex: 1;
+        white-space: nowrap; /* Prevent text wrapping */
+        overflow: hidden; /* Hide overflow if needed */
+        text-overflow: ellipsis; /* Show ... if text is too long */
     }
 
     .website-button {
@@ -1117,7 +1121,7 @@ a:hover {
 
     .stock-ticker::before {
         content: "LIVE\AMARKETS";
-        left: 50px;
+        left: 53px; /* Moved 3px to the right for better centering */
         width: 80px;
         font-size: 9px;
         letter-spacing: 0.5px;
