@@ -629,8 +629,12 @@ class HQVSite {
     setupInfohubScrolling() {
         // Synchronized scrolling between page scroll and infohub content
         const infoColumn = document.querySelector('.info-column');
-        if (!infoColumn) return;
+        if (!infoColumn) {
+            console.log('Info column not found for scroll sync');
+            return;
+        }
 
+        console.log('Setting up infohub scroll sync');
         let isScrolling = false;
 
         // Listen for window scroll events
@@ -642,18 +646,28 @@ class HQVSite {
                 // Calculate scroll percentage of the page
                 const windowScrollTop = window.pageYOffset || document.documentElement.scrollTop;
                 const windowScrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+                if (windowScrollHeight <= 0) {
+                    isScrolling = false;
+                    return;
+                }
+
                 const scrollPercentage = Math.min(windowScrollTop / windowScrollHeight, 1);
 
                 // Apply the same scroll percentage to the infohub
                 const infoScrollHeight = infoColumn.scrollHeight - infoColumn.clientHeight;
-                infoColumn.scrollTop = scrollPercentage * infoScrollHeight;
+
+                if (infoScrollHeight > 0) {
+                    infoColumn.scrollTop = scrollPercentage * infoScrollHeight;
+                }
 
                 isScrolling = false;
             });
         });
 
         // Add smooth scroll behavior
-        infoColumn.style.scrollBehavior = 'auto'; // Use auto for responsive scrolling
+        infoColumn.style.scrollBehavior = 'auto';
+        console.log('Infohub scroll sync setup complete');
     }
 
     setupSponsorCarousel() {
