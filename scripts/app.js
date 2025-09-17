@@ -493,9 +493,8 @@ class HQVSite {
 
     async updateStockData(stocks, tickerContent) {
         try {
-            // Using mock data to avoid CORS issues with financial APIs
-            // Generate realistic-looking stock data for demonstration
-            const stockData = stocks.map(symbol => this.getMockStockData(symbol));
+            // Fetch real stock data using CORS proxy
+            const stockData = await this.fetchStockData(stocks);
 
             const tickerItems = this.insertSponsorAds(stockData.map(stock => {
                 const isPositive = stock.change >= 0;
@@ -544,37 +543,28 @@ class HQVSite {
         try {
             const promises = symbols.map(async (symbol) => {
                 try {
-                    const response = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`);
+                    // Use CORS proxy to bypass browser CORS restrictions
+                    const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`)}`);
 
-                    // Handle API rate limit or quota exceeded
-                    if (response.status === 429) {
-                        console.warn('Finnhub API rate limit reached, using mock data');
-                        return this.getMockStockData(symbol);
-                    }
+                    if (response.ok) {
+                        const proxyData = await response.json();
+                        const apiResponse = JSON.parse(proxyData.contents);
 
-                    // Handle quota exceeded or other API limits
-                    if (response.status === 403) {
-                        console.warn('Finnhub API quota exceeded, using mock data');
-                        return this.getMockStockData(symbol);
-                    }
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-
-                    const data = await response.json();
-
-                    // Check if API returned valid data
-                    if (data.c && data.c > 0) {
-                        return {
-                            symbol,
-                            price: Number(data.c.toFixed(2)),
-                            change: Number((data.d || 0).toFixed(2)),
-                            changePercent: Number((data.dp || 0).toFixed(2))
-                        };
+                        // Check if API returned valid data
+                        if (apiResponse.c && apiResponse.c > 0) {
+                            return {
+                                symbol,
+                                price: Number(apiResponse.c.toFixed(2)),
+                                change: Number((apiResponse.d || 0).toFixed(2)),
+                                changePercent: Number((apiResponse.dp || 0).toFixed(2))
+                            };
+                        } else {
+                            // API returned empty/invalid data, use mock
+                            console.warn(`Invalid data for ${symbol}, using mock data`);
+                            return this.getMockStockData(symbol);
+                        }
                     } else {
-                        // API returned empty/invalid data, use mock
-                        console.warn(`Invalid data for ${symbol}, using mock data`);
+                        console.warn(`Proxy failed for ${symbol}, using mock data`);
                         return this.getMockStockData(symbol);
                     }
                 } catch (error) {
