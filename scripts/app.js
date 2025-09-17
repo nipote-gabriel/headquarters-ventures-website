@@ -493,9 +493,9 @@ class HQVSite {
 
     async updateStockData(stocks, tickerContent) {
         try {
-            // Using a free financial API - you can replace with your preferred service
-            // For demo, we'll use a fallback to mock data since we need an API key
-            const stockData = await this.fetchStockData(stocks);
+            // Using mock data to avoid CORS issues with financial APIs
+            // Generate realistic-looking stock data for demonstration
+            const stockData = stocks.map(symbol => this.getMockStockData(symbol));
 
             const tickerItems = this.insertSponsorAds(stockData.map(stock => {
                 const isPositive = stock.change >= 0;
@@ -902,18 +902,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 100);
 });
 
-// Service Worker registration for PWA capabilities (optional)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then((registration) => {
-                console.log('SW registered: ', registration);
-            })
-            .catch((registrationError) => {
-                console.log('SW registration failed: ', registrationError);
-            });
-    });
-}
+// Service Worker registration removed to eliminate 404 errors
+// Can be re-enabled when sw.js file is created
 
 // Newsletter subscription function
 function subscribeToNewsletter() {
