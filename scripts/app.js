@@ -506,7 +506,29 @@ class HQVSite {
             }));
 
             if (tickerContent) {
-                tickerContent.innerHTML = tickerItems.join('');
+                const newContent = tickerItems.join('');
+                // Only update if content actually changed to avoid animation restart
+                if (tickerContent.innerHTML !== newContent) {
+                    // Store current animation state
+                    const computedStyle = window.getComputedStyle(tickerContent);
+                    const animationName = computedStyle.animationName;
+                    const animationDuration = computedStyle.animationDuration;
+                    const animationTimingFunction = computedStyle.animationTimingFunction;
+                    const animationIterationCount = computedStyle.animationIterationCount;
+                    const animationDelay = computedStyle.animationDelay;
+
+                    // Temporarily pause animation
+                    tickerContent.style.animationPlayState = 'paused';
+
+                    // Update content
+                    tickerContent.innerHTML = newContent;
+
+                    // Force reflow
+                    tickerContent.offsetHeight;
+
+                    // Resume animation
+                    tickerContent.style.animationPlayState = 'running';
+                }
             }
         } catch (error) {
             console.error('Error updating stock data:', error);
@@ -609,7 +631,21 @@ class HQVSite {
         const tickerItemsWithAds = this.insertSponsorAds(tickerItems);
 
         if (tickerContent) {
-            tickerContent.innerHTML = tickerItemsWithAds.join('');
+            const newContent = tickerItemsWithAds.join('');
+            // Only update if content actually changed to avoid animation restart
+            if (tickerContent.innerHTML !== newContent) {
+                // Temporarily pause animation
+                tickerContent.style.animationPlayState = 'paused';
+
+                // Update content
+                tickerContent.innerHTML = newContent;
+
+                // Force reflow
+                tickerContent.offsetHeight;
+
+                // Resume animation
+                tickerContent.style.animationPlayState = 'running';
+            }
         }
     }
 
