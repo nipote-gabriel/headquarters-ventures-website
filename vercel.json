@@ -3,6 +3,13 @@
   "public": true,
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/portfolio",
+      "permanent": false
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)\\.(css|js|svg|png|jpg|jpeg|gif|webp)",
