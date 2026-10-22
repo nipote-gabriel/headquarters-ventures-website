@@ -3,163 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Headquarters Ventures</title>
-    <meta name="description" content="Explore our investment portfolio and business ventures. Business, comedy, and the occasional bad idea.">
-    <meta name="keywords" content="portfolio, investments, ventures, headquarters ventures, business">
-    
-    <!-- Open Graph / Facebook -->
+    <title>Portfolio — Headquarters Ventures</title>
+    <meta name="description" content="The creators and entertainment properties backed by Headquarters Ventures.">
+    <link rel="canonical" href="https://headquarters.ventures/portfolio">
+
+    <!-- Open Graph / Twitter -->
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Headquarters Ventures">
     <meta property="og:url" content="https://headquarters.ventures/portfolio">
-    <meta property="og:title" content="Portfolio - Headquarters Ventures">
-    <meta property="og:description" content="Our investment portfolio and business ventures">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://headquarters.ventures/portfolio">
-    <meta property="twitter:title" content="Portfolio - Headquarters Ventures">
-    <meta property="twitter:description" content="Our investment portfolio and business ventures">
-    
-    <link rel="stylesheet" href="styles.css">
+    <meta property="og:title" content="Portfolio — Headquarters Ventures">
+    <meta property="og:description" content="The creators and entertainment properties backed by Headquarters Ventures.">
+    <meta property="og:image" content="https://headquarters.ventures/img/brand/og.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Portfolio — Headquarters Ventures">
+    <meta name="twitter:description" content="The creators and entertainment properties backed by Headquarters Ventures.">
+    <meta name="twitter:image" content="https://headquarters.ventures/img/brand/og.jpg">
+    <meta name="theme-color" content="#f3ede1">
+
+    <link rel="icon" type="image/png" href="/img/brand/favicon.png">
+    <link rel="apple-touch-icon" href="/img/brand/apple-touch-icon.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/site.css">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav">
-            <div class="nav-brand">
-                <a href="/" class="brand-link">
-                    <img src="graphic assets/hq-pure-icon.png" alt="HQ" class="brand-icon">
-                    <h1 class="brand-title">Headquarters Ventures</h1>
-                </a>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="https://headquarterscomedy.beehiiv.com/" target="_blank" class="nav-link">Newsletter</a></li>
-                <li><a href="portfolio.html" class="nav-link active">Portfolio</a></li>
-            </ul>
-            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
-                <span></span>
-                <span></span>
-                <span></span>
+    <header class="site-header">
+        <div class="wrap">
+            <a href="/" class="brand" aria-label="Headquarters Ventures home">
+                <img src="/img/brand/hq-mark-96.webp" alt="" width="44" height="29">
+                <span>Headquarters Ventures</span>
+            </a>
+            <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-nav">
+                <span></span><span></span><span></span>
             </button>
-        </nav>
+            <nav class="nav" id="site-nav" aria-label="Main">
+                <a href="/portfolio" aria-current="page">Portfolio</a>
+                <a href="/about">Approach</a>
+                <a href="/team">Team</a>
+                <a href="https://headquarterscomedy.beehiiv.com/" target="_blank" rel="noopener">Newsletter</a>
+                <a href="/about#pitch" class="btn">Pitch us</a>
+            </nav>
+        </div>
     </header>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay">
-        <div class="mobile-menu-panel">
-            <div class="mobile-menu-header">
-                <h3 class="mobile-menu-title">Menu</h3>
-                <button class="mobile-menu-close" aria-label="Close menu">&times;</button>
-            </div>
-            <ul class="mobile-nav-links">
-                <li><a href="https://headquarterscomedy.beehiiv.com/" target="_blank" class="nav-link">Newsletter</a></li>
-                <li><a href="portfolio.html" class="nav-link active">Portfolio</a></li>
-            </ul>
-        </div>
-    </div>
-
     <main>
-        <!-- Page Header -->
-        <section class="page-header">
-            <div class="container">
-                <h1>Our Portfolio</h1>
-                <p>We put our mouth where our money is.</p>
-                <p>Subscribe to our newsletter to stay up to date with all of our activities.</p>
+        <section class="page-head">
+            <div class="wrap">
+                <div class="eyebrow" style="margin-bottom:24px">Portfolio</div>
+                <h1 class="display">We put our mouth where our money is.</h1>
+                <p>Creators and entertainment properties we&rsquo;ve backed with capital, management and an unreasonable amount of confidence. Tap any venture for the deal memo.</p>
             </div>
         </section>
 
-        <!-- Portfolio Stats -->
-        <section class="portfolio-stats">
-            <div class="container">
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-number">$10k</div>
-                        <div class="stat-label">Total Invested</div>
+        <section class="section" style="padding-top:0">
+            <div class="wrap">
+                <div class="stats" style="margin-bottom:clamp(48px,6vw,88px)">
+                    <div class="stat">
+                        <div class="stat-num" data-stat="count">16</div>
+                        <div class="stat-label">Ventures</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">6</div>
-                        <div class="stat-label">Companies</div>
+                    <div class="stat">
+                        <div class="stat-num" data-stat="audience">16.5M</div>
+                        <div class="stat-label">Combined audience</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">0</div>
+                    <div class="stat">
+                        <div class="stat-num" data-stat="exits">1</div>
                         <div class="stat-label">Exits</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-number">-212%</div>
-                        <div class="stat-label">Average Return</div>
+                    <div class="stat">
+                        <div class="stat-num">&minus;212%</div>
+                        <div class="stat-label">Average return<small>Improving</small></div>
                     </div>
                 </div>
+
+                <div class="toolbar">
+                    <div class="filters" id="portfolio-filters" role="group" aria-label="Filter by category"></div>
+                    <label>
+                        <span class="eyebrow" style="position:absolute;left:-9999px">Stage</span>
+                        <select class="select" id="portfolio-stage"></select>
+                    </label>
+                </div>
+                <div class="eyebrow" id="portfolio-count" style="margin-bottom:20px" aria-live="polite"></div>
+                <div class="venture-grid" id="portfolio-grid"></div>
             </div>
         </section>
 
-        <!-- Filter Tabs -->
-        <section class="portfolio-content">
-            <div class="container">
-                <!-- Investment Philosophy -->
-                <div class="investment-philosophy">
-                    <h2>Our Investment Philosophy</h2>
-                    <div class="philosophy-grid">
-                        <div class="philosophy-item">
-                            <div class="philosophy-icon">💡</div>
-                            <h3>Innovation First</h3>
-                            <p>We invest in companies solving real problems with creative solutions, even if those solutions seem crazy at first.</p>
-                        </div>
-<div class="philosophy-item">
-                            <div class="philosophy-icon">👥</div>
-                            <h3>Great Teams</h3>
-                            <p>We bet on exceptional founders who can execute their vision, adapt to challenges, and build strong company cultures.</p>
-                        </div>
-                        <div class="philosophy-item">
-                            <div class="philosophy-icon">🎯</div>
-                            <h3>Long-term Focus</h3>
-                            <p>We're patient investors who understand that building great companies takes time. Our average hold period is 5-7 years.</p>
-                        </div>
-                    </div>
+        <section class="band">
+            <div class="wrap">
+                <div class="eyebrow">Building something?</div>
+                <blockquote>If your business plan is <em>you,</em> we should talk.</blockquote>
+                <div class="band-foot">
+                    <a href="/about#pitch" class="btn">Pitch us <span class="arrow" aria-hidden="true">&rarr;</span></a>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <h3>Headquarters Ventures</h3>
-                    <p>Geniuses doing business.</p>
+    <footer class="site-footer">
+        <div class="wrap">
+            <div class="footer-top">
+                <div>
+                    <p class="footer-word">In Competence<br>We Trust.</p>
                 </div>
-                <div class="footer-links">
-                    <div class="link-group">
-                        <h4>Content</h4>
-                        <ul>
-                            <li><a href="https://www.instagram.com/gabe_makes_jokes/" target="_blank">Instagram</a></li>
-                            <li><a href="https://www.tiktok.com/@gabe_makes_jokes" target="_blank">TikTok</a></li>
-                            <li><a href="https://www.youtube.com/@gabe_makes_jokes/shorts" target="_blank">YouTube</a></li>
-                        </ul>
-                    </div>
-                    <div class="link-group">
-                        <h4>Connect</h4>
-                        <ul>
-                            <li><a href="https://www.linkedin.com/in/gabriel-nipote-5a0815125/" target="_blank">LinkedIn</a></li>
-                            <li><a href="https://x.com/gabe_makes_joke" target="_blank">Twitter</a></li>
-                        </ul>
-                    </div>
-                    <div class="link-group">
-                        <h4>Newsletter</h4>
-                        <ul>
-                            <li><a href="https://headquarterscomedy.beehiiv.com/" target="_blank">Newsletter</a></li>
-                        </ul>
-                    </div>
+                <div>
+                    <h4>Firm</h4>
+                    <ul>
+                        <li><a href="/portfolio">Portfolio</a></li>
+                        <li><a href="/about">Approach</a></li>
+                        <li><a href="/team">Team</a></li>
+                        <li><a href="/about#pitch">Pitch us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Content</h4>
+                    <ul>
+                        <li><a href="https://headquarterscomedy.beehiiv.com/" target="_blank" rel="noopener">Newsletter</a></li>
+                        <li><a href="https://www.instagram.com/gabe_makes_jokes/" target="_blank" rel="noopener">Instagram</a></li>
+                        <li><a href="https://www.tiktok.com/@gabe_makes_jokes" target="_blank" rel="noopener">TikTok</a></li>
+                        <li><a href="https://www.youtube.com/@gabe_makes_jokes/shorts" target="_blank" rel="noopener">YouTube</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="https://www.linkedin.com/company/headquarters-ventures" target="_blank" rel="noopener">LinkedIn</a></li>
+                        <li><a href="https://x.com/gabe_makes_joke" target="_blank" rel="noopener">X / Twitter</a></li>
+                    </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Headquarters Ventures. All rights reserved.</p>
+                <span>&copy; <span data-year>2026</span> Headquarters Ventures. The incompetence venture arm of Headquarters Comedy.</span>
+                <span>Portfolio shown is fictional. So is most of our money.</span>
             </div>
         </div>
     </footer>
 
-    <script src="scripts/app.js"></script>
+    <script src="/scripts/site.js" defer></script>
 </body>
 </html>

@@ -1,25 +1,103 @@
-<!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Not Found — Headquarters Ventures</title>
-<link rel="stylesheet" href="/styles.css"/></head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not found — Headquarters Ventures</title>
+    <meta name="description" content="Page not found.">
+    <meta name="robots" content="noindex">
+    <link rel="canonical" href="https://headquarters.ventures/404">
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Headquarters Ventures">
+    <meta property="og:url" content="https://headquarters.ventures/404">
+    <meta property="og:title" content="Not found — Headquarters Ventures">
+    <meta property="og:description" content="Page not found.">
+    <meta property="og:image" content="https://headquarters.ventures/img/brand/og.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Not found — Headquarters Ventures">
+    <meta name="twitter:description" content="Page not found.">
+    <meta name="twitter:image" content="https://headquarters.ventures/img/brand/og.jpg">
+    <meta name="theme-color" content="#f3ede1">
+
+    <link rel="icon" type="image/png" href="/img/brand/favicon.png">
+    <link rel="apple-touch-icon" href="/img/brand/apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/site.css">
+</head>
 <body>
-<div class="nav"><div class="brand"><a href="/"><img src="/images/logo.svg" alt="logo" width="160" height="28"/></a></div>
-<div class="links"><a href="/episodes.html">Episodes</a><a href="/blog.html">Articles</a><a href="/guests.html">Guests</a><a href="/about.html">About</a></div></div>
-
-<!-- Mobile Menu Overlay -->
-<div class="mobile-menu-overlay">
-    <div class="mobile-menu-panel">
-        <div class="mobile-menu-header">
-            <h3 class="mobile-menu-title">Menu</h3>
-            <button class="mobile-menu-close" aria-label="Close menu">&times;</button>
+    <header class="site-header">
+        <div class="wrap">
+            <a href="/" class="brand" aria-label="Headquarters Ventures home">
+                <img src="/img/brand/hq-mark-96.webp" alt="" width="44" height="29">
+                <span>Headquarters Ventures</span>
+            </a>
+            <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-nav">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav" id="site-nav" aria-label="Main">
+                <a href="/portfolio">Portfolio</a>
+                <a href="/about">Approach</a>
+                <a href="/team">Team</a>
+                <a href="https://headquarterscomedy.beehiiv.com/" target="_blank" rel="noopener">Newsletter</a>
+                <a href="/about#pitch" class="btn">Pitch us</a>
+            </nav>
         </div>
-        <ul class="mobile-nav-links">
-            <li><a href="https://headquarterscomedy.beehiiv.com/" target="_blank" class="nav-link">Newsletter</a></li>
-            <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
-        </ul>
-    </div>
-</div>
+    </header>
 
-<div class="container"><h1>404</h1><p class="small">The page you’re looking for doesn’t exist. Try the navigation above.</p></div>
-</body></html>
+    <main>
+        <section class="page-head" style="min-height:60vh">
+            <div class="wrap">
+                <div class="eyebrow" style="margin-bottom:24px">404</div>
+                <h1 class="display">This page didn&rsquo;t make it past diligence.</h1>
+                <p>It may have been written off. Try the <a href="/portfolio">portfolio</a> or go <a href="/">home</a>.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <div class="footer-top">
+                <div>
+                    <p class="footer-word">In Competence<br>We Trust.</p>
+                </div>
+                <div>
+                    <h4>Firm</h4>
+                    <ul>
+                        <li><a href="/portfolio">Portfolio</a></li>
+                        <li><a href="/about">Approach</a></li>
+                        <li><a href="/team">Team</a></li>
+                        <li><a href="/about#pitch">Pitch us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Content</h4>
+                    <ul>
+                        <li><a href="https://headquarterscomedy.beehiiv.com/" target="_blank" rel="noopener">Newsletter</a></li>
+                        <li><a href="https://www.instagram.com/gabe_makes_jokes/" target="_blank" rel="noopener">Instagram</a></li>
+                        <li><a href="https://www.tiktok.com/@gabe_makes_jokes" target="_blank" rel="noopener">TikTok</a></li>
+                        <li><a href="https://www.youtube.com/@gabe_makes_jokes/shorts" target="_blank" rel="noopener">YouTube</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="https://www.linkedin.com/company/headquarters-ventures" target="_blank" rel="noopener">LinkedIn</a></li>
+                        <li><a href="https://x.com/gabe_makes_joke" target="_blank" rel="noopener">X / Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; <span data-year>2026</span> Headquarters Ventures. The incompetence venture arm of Headquarters Comedy.</span>
+                <span>Portfolio shown is fictional. So is most of our money.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/scripts/site.js" defer></script>
+</body>
+</html>
