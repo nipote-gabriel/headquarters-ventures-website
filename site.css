@@ -103,7 +103,7 @@ button { font: inherit; color: inherit; }
     white-space: nowrap;
 }
 
-.brand img { width: 44px; height: auto; }
+.brand img { width: 56px; height: auto; }
 
 .nav {
     display: flex;
